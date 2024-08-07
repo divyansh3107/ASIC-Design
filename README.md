@@ -19,11 +19,11 @@
 ## Compiling the same C code in RISC V compiler
 1. Now we will compile it using RISC-V compiler. It generates a file sum1toN.o
    
-```bash
+```
 riscv64-unknown-elf-gcc -O1 -mabi=lp64-march=rv64i -o sum1toN.o  sum1toN.c
 ```
 
-```bash
+```
 ls -ltr sum1toN.o
 ```
    <img width="1440" alt="Screenshot 2024-08-07 at 7 28 27 PM" src="https://github.com/user-attachments/assets/f60df2fe-f66f-4625-925f-1a60843c4adc">
@@ -36,10 +36,10 @@ ls -ltr sum1toN.o
 - `sum1toN.c`: The source file to be compiled.
 
 2. Now we open it using objdump and then | less to see the <main> segment of the code.
-```bash
+```
 riscv64-unknown-elf-objdump -d sum1toN.o
 ```
-```bash
+```
 riscv64-unknown-elf-objdump -d sum1toN.o | less
 ```
 
@@ -50,7 +50,7 @@ riscv64-unknown-elf-objdump -d sum1toN.o | less
 
 3. Now calucation the number os instructions a shown. We got 15 instructions also shown in calculator.
 
-```bash
+```
 riscv64-unknown-elf-gcc -Ofast -mabi=lp64-march=rv64i -o sum1toN.o  sum1toN.c
 ```
 <img width="1440" alt="Screenshot 2024-08-08 at 1 03 00 AM" src="https://github.com/user-attachments/assets/529c6e56-2324-486f-827d-1c296fbe8228">
@@ -71,7 +71,7 @@ riscv64-unknown-elf-gcc -Ofast -mabi=lp64-march=rv64i -o sum1toN.o  sum1toN.c
 ## Debugging the code in Spike on RISC V
 
 1. Run the command
- ```bash
+ ```
 spike pk sum1toN.o
 ```
 <img width="1440" alt="Screenshot 2024-08-08 at 1 15 12 AM" src="https://github.com/user-attachments/assets/a2e99939-3135-48d2-a224-8c61826a7c05">
@@ -85,24 +85,24 @@ spike pk sum1toN.o
 2. Check using the following commands in the spike debugger
 
 
- ```bash
+ ```
 spike pk sum1toN.o
 ```
-```bash
+```
 until pc 0 100b0
 ```
 To check a registers Value type the following command 
-```bash
+```
 reg 0 a2
 ```
 To check stack pointer's Value type the following command 
-```bash
+```
 reg 0 sp
 ```
 
 <img width="1440" alt="Screenshot 2024-08-08 at 1 12 11 AM" src="https://github.com/user-attachments/assets/fa264e40-87a9-4845-8a26-3a03f7e03994">
 <img width="1440" alt="Screenshot 2024-08-08 at 1 14 39 AM" src="https://github.com/user-attachments/assets/3f85c504-7630-4d59-8e87-113016fc4d33">
 
-- In the assembly code, it's evident that the stack pointer's value is being decreased by `0x10` in hexadecimal notation. This hexadecimal value translates to a reduction of 16 in decimal notation. Thus, the stack pointer is effectively being reduced by `16` units in decimal form.
+- In the assembly code, the stack pointer's value is being decreased by `0x10` in hexadecimal notation. 10->16 in Hexa decimal. 
 </details>
 
