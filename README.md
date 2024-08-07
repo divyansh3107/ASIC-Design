@@ -86,7 +86,7 @@ spike pk sum1toN.o
 
 
  ```
-spike pk sum1toN.o
+spike -d pk sum1toN.o
 ```
 ```
 until pc 0 100b0
