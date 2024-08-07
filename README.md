@@ -43,17 +43,19 @@ riscv64-unknown-elf-objdump -d sum1toN.o
 riscv64-unknown-elf-objdump -d sum1toN.o | less
 ```
 
-<img width="1440" alt="Screenshot 2024-08-07 at 7 31 08 PM" src="https://github.com/user-attachments/assets/78e7bcc5-9afc-42a8-ab06-d7c6f1784067">
+<img width="1440" alt="Screenshot 2024-08-08 at 1 19 20 AM" src="https://github.com/user-attachments/assets/e89c54fa-bb63-4afb-820e-f4edd5e67a8c">
 
-<img width="1440" alt="Screenshot 2024-08-07 at 7 35 36 PM" src="https://github.com/user-attachments/assets/76695dd4-cca5-462a-b5e5-a2e0f78dd52e">
-3. Now calucation the number os instructions a shown. We got 15 instructions.
+<img width="1440" alt="Screenshot 2024-08-08 at 1 19 44 AM" src="https://github.com/user-attachments/assets/2b1e4053-63c8-4531-ba83-ae80d8d1f412">
+
+
+3. Now calucation the number os instructions a shown. We got 15 instructions also shown in calculator.
 
 ```bash
 riscv64-unknown-elf-gcc -Ofast -mabi=lp64-march=rv64i -o sum1toN.o  sum1toN.c
 ```
 <img width="1440" alt="Screenshot 2024-08-08 at 1 03 00 AM" src="https://github.com/user-attachments/assets/529c6e56-2324-486f-827d-1c296fbe8228">
 
-4. Now we will run using Ofast instead of O1 and check the number of instructions.
+4. Now we will run using Ofast instead of O1 and check the number of instructions (reduced to 12).
    <img width="1440" alt="Screenshot 2024-08-07 at 11 41 58 PM" src="https://github.com/user-attachments/assets/67983ca8-f045-4fef-b99d-eaf2cafb6913">
    <img width="1440" alt="Screenshot 2024-08-08 at 1 04 02 AM" src="https://github.com/user-attachments/assets/50f518ac-c120-473c-b360-8dcb99773811">
 
