@@ -106,3 +106,220 @@ reg 0 sp
 - In the assembly code, the stack pointer's value is being decreased by `0x10` in hexadecimal notation. 10->16 in Hexa decimal. 
 </details>
 
+
+<details>
+<summary><strong>Lab 3:</strong> Identify various RISC-V instruction type (R, I, S, B, U, J) and extract 32-bit instruction code in the instruction type format for below RISC-V instructions.</summary>
+
+# Lab-3
+## RISC-V instruction type (R, I, S, B, U, J) and extract 32-bit instruction code
+
+### RISC-V Instruction Formats
+
+Instruction formats in RISC-V act as a 'contract' between the assembly language and the hardware. When an assembly instruction is executed, the hardware understands exactly what to do based on this contract. Each instruction type has a specific format, defined by a series of 0s and 1s, that includes details such as the type of operation and the location of data.
+There are 6 types of instructions.
+<img width="661" alt="Screenshot 2024-08-10 at 7 35 56 PM" src="https://github.com/user-attachments/assets/8357de63-b6a2-43e6-b74d-04e8cf306e0c">
+
+Now before jumping into each format directly, lets take a look of subfields which are going to be there in the instructions. I'll be explaining them here. In case any new instruction is there, it will be explained in that format.  
+
+**1.opcode**   
+Reffered to as opearation code. It is of 7 bit length and it specifies what the instruction does, such as arithmetic operations, logical operations, memory operations, or control flow operations. For example, opcode 0110011 specifies R format.  
+
+**2.rd**   
+It stands for destination register. It is a field in the instruction format that specifies which register will receive the result of an operation.   
+
+**3.rs1 and rs2**    
+They stand for source register 1 and source register 2, respectively. They are fields in the instruction format that specify which registers contain the operands or data used by an instruction.
+
+**4.func3 and func7**  
+func3 provides additional details about the specific operation within the opcode category and func7 basically complements it by providing additional details of same information.
+
+**5.Immediate**  
+It is a constant value that is part of an instruction. It is directly encoded within the instruction's binary representation, typically following the opcode and other necessary fields. In different formats, they occupies different bits, which will be explained furthur in the formats.  
+
+
+### Given Instructions:
+1. ADD r8, r9, r10 <br>
+2. SUB r10, r8, r9  <br>
+3. AND r9, r8, r10 <br>
+4. OR r8, r9, r5   <br>
+5. .XOR r8, r8, r4    <br>
+6. SLT r00, r1, r4  <br>
+7. ADDI r02, r2, 5  <br>
+8. SW r2, r0, 4      <br>
+9. SRL r06, r01, r1  <br>
+10. BNE r0, r0, 20   <br>
+11. BEQ r0, r0, 15    <br>
+12. LW r03, r01, 2    <br>
+13. SLL r05, r01, r1  <br>
+
+
+The RISC-V ISA , Hardcoded ISA and Instruction format of the given instructions.
+
+| S.no.| Operation         | RISC-V ISA      | Hardcoded ISA   | Instruction Format |
+|-----|-------------------|-----------------|-----------------|---------------------|
+|1.| ADD r8, r9, r10   | 32’h00A482B3    | 32'h02208300    | R-type              |
+|2.| SUB r10, r8, r9   | 32’h409482B3    | 32'h02209380    | R-type              |
+|3.| AND r9, r8, r10   | 32’h00A4C2B3    | 32'h0230A400    | R-type              |
+|4.| OR r8, r9, r5     | 32’h005482B3    | 32'h02513480    | R-type              |
+|5.| XOR r8, r8, r4    | 32’h004482B3    | 32'h0240C500    | R-type              |
+|6.| SLT r00, r1, r4   | 32’h004002B3    | 32'h02415580    | R-type              |
+|7.| ADDI r02, r2, 5   | 32’h00510113    | 32'h00520600    | I-type              |
+|8.| SW r2, r0, 4      | 32’h00412023    | 32'h00209181    | S-type              |
+|9.| SRL r06, r01, r1  | 32’h00119533    | 32'h00271803    | R-type              |
+|10.| BNE r0, r0, 20    | 32’h01400063    | 32'h01409002    | B-type              |
+|11.| BEQ r0, r0, 15    | 32’h00F00063    | 32'h00F00002    | B-type              |
+|12.| LW r03, r01, 2    | 32’h00210183    | 32'h00208681    | I-type              |
+|13.| SLL r05, r01, r1  | 32’h00109533    | 32’h00208783    | R-type              |
+
+
+Examples how instructions are decoded: **One of each type is explained** <br>
+```
+1) ADD r8, r9, r10
+  - Opcode: 0110011
+  - rd = r8 = 01000
+  - rs1 = r9 = 01001
+  - rs2 = r10 = 01010
+  - funct3: 000
+  - funct7: 0000000
+  - R-Type
+  - 32-bit Instruction: `0000000_01010_01001_000_01000_0110011`
+```
+
+```
+
+7) ADDI r2, r2, 5
+  - Opcode: 0010011
+  - rd = r2 = 00010
+  - rs1 = r2 = 00010
+  - immediate: 000000000101
+  - funct3: 000
+  - I-Type
+  - 32-bit Instruction: `000000000101_00010_000_00010_0010011`
+```
+```
+
+8) SW r2, r0, 4
+  - Opcode: 0100011
+  - rs2 = r2 = 00010
+  - rs1 = r0 = 00000
+  - imm[11:5]: 0000000
+  - imm[4:0]: 00100
+  - funct3: 010
+  - S-Type
+  - 32-bit Instruction: `0000000_00010_00000_010_00100_0100011`
+
+```
+
+```
+
+10) BNE r0, r0, 20
+  - Opcode: 1100011
+  - rs1 = r0 = 00000
+  - rs2 = r0 = 00000
+  - imm[12|10:5|4:1|11]: 0000000 00000 00010 0
+  - funct3: 001
+  - B-Type
+  - 32-bit Instruction: `0000000_00000_00000_001_00010_0000000_1100011`
+
+```
+
+### RISC-V Functional Simulation
+1. Cloning Repository and runnning the iiitb_rv32i.v code and generating .vcd file and opening it using gtkwave using the following commands.
+```
+git clone https://github.com/vinayrayapati/iiitb_rv32i
+cd iiitb_rv32i
+```
+
+```
+iverilog -o iiitb_rv32i iiitb_rv32i.v iiitb_rv32i_tb.v
+./iiitb_rv32i
+```
+
+```
+gtkwave iiitb_rv32i.vcd
+```
+<img width="1440" alt="Screenshot 2024-08-10 at 8 50 17 PM" src="https://github.com/user-attachments/assets/b0999c59-30c7-4953-8dd5-95e5f12fe711">
+
+
+
+<img width="1440" alt="Screenshot 2024-08-10 at 8 55 24 PM" src="https://github.com/user-attachments/assets/8f257896-b956-4be0-9ee8-2dca63a72751">
+
+
+<img width="1440" alt="Screenshot 2024-08-10 at 8 55 51 PM" src="https://github.com/user-attachments/assets/8552b494-344c-4288-b929-242c60b1168d">
+
+### The output waveform:
+
+The output waveform showing the instructions performed in a 5-stage pipelined architecture.
+
+|S. no.| Operation          | Standard RISCV ISA | Hardcoded ISA |
+|-----|--------------------|---------------------|---------------|
+|1.| ADD R6, R2, R1     | 32'h00110333        | 32'h02208300  |
+|2.| SUB R7, R1, R2     | 32'h402083b3        | 32'h02209380  |
+|3.| AND R8, R1, R3     | 32'h0030f433        | 32'h0230a400  |
+|4.| OR R9, R2, R5      | 32'h005164b3        | 32'h02513480  |
+|5.| XOR R10, R1, R4    | 32'h0040c533        | 32'h0240c500  |
+|6.| SLT R1, R2, R4     | 32'h0045a0b3        | 32'h02415580  |
+|7.| ADDI R12, R4, 5    | 32'h004120b3        | 32'h00520600  |
+|8.| BEQ R0, R0, 15     | 32'h00000f63        | 32'h00f00002  |
+|9.| SW R3, R1, 2       | 32'h0030a123        | 32'h00209181  |
+|10.| LW R13, R1, 2      | 32'h0020a683        | 32'h00208681  |
+|11.| SRL R16, R14, R2   | 32'h0030a123        | 32'h00271803  |
+|12.| SLL R15, R1, R2    | 32'h002097b3        | 32'h00208783  |
+
+
+Output of the instructions:
+
+1. ADD R6, R2, R1    <br>
+
+<img width="1440" alt="Screenshot 2024-08-11 at 12 35 00 AM" src="https://github.com/user-attachments/assets/3a471dd7-e3b4-484b-9e67-db190086ee6b">
+
+
+
+
+
+2. SUB R7, R1, R2     <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 50 24 AM" src="https://github.com/user-attachments/assets/111ebf0c-d928-4bfa-ac16-297f98b94c9d">
+
+
+3. AND R8, R1, R3    <br>
+
+<img width="1440" alt="Screenshot 2024-08-11 at 12 51 12 AM" src="https://github.com/user-attachments/assets/6fe1bf5d-b819-409a-9334-72d6ed16970e">
+
+4. OR R9, R2, R5      <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 51 29 AM" src="https://github.com/user-attachments/assets/e0ba51c0-427d-46ed-8187-37170d579336">
+
+   
+5. XOR R10, R1, R4   <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 54 20 AM" src="https://github.com/user-attachments/assets/7c82fca6-7cfa-4994-8817-14bcee2e645f">
+
+
+6. SLT R1, R2, R4     <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 54 44 AM" src="https://github.com/user-attachments/assets/7430321a-0f1c-43c3-bbfe-25e125d8d06f">
+
+
+7. ADDI R12, R4, 5   <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 55 02 AM" src="https://github.com/user-attachments/assets/2995c5ce-8ea6-4810-89d1-c05b3a7c4c03">
+
+
+
+8. BEQ R0, R0, 15     <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 55 32 AM" src="https://github.com/user-attachments/assets/c767a9a1-6830-453b-9b56-46489f48c5d6">
+
+
+9. SW R3, R1, 2      <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 56 29 AM" src="https://github.com/user-attachments/assets/bad3ac36-ce09-4346-97ec-00d4ff519126">
+
+
+
+10. LW R13, R1, 2     <br>
+<img width="1440" alt="Screenshot 2024-08-11 at 12 56 10 AM" src="https://github.com/user-attachments/assets/d3578340-f241-49f6-aca3-f1bdfdcb3d35">
+
+
+
+
+
+
+
+
+</details>
+
