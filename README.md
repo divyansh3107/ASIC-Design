@@ -313,7 +313,88 @@ Output of the instructions:
 
 10. LW R13, R1, 2     <br>
 <img width="1440" alt="Screenshot 2024-08-11 at 12 56 10 AM" src="https://github.com/user-attachments/assets/d3578340-f241-49f6-aca3-f1bdfdcb3d35">
+</details>
 
+
+<details>
+ 
+<summary><strong>Lab 4:</strong> A C program which reverses an integer, compile with gcc and Risc-V architecture compilers and verify the output also its Spike simulation</summary>
+
+# Lab-4
+## Compiling the C code in GCC. Reverse an integer.
+
+1. Create a file named reverse.c using gedit.
+```
+gedit reverse.c
+```
+
+<img width="1440" alt="Screenshot 2024-08-14 at 7 53 36 PM" src="https://github.com/user-attachments/assets/50257fec-ca33-4349-9888-a2d811e41cdd">
+
+2. Write the code of reversing an integer and save it.
+```c
+#include <stdio.h>
+
+int main() {
+
+  int n, reverse = 0, remainder;
+
+  printf("Enter an integer: ");
+  scanf("%d", &n);
+
+  while (n != 0) {
+    remainder = n % 10;
+    reverse = reverse * 10 + remainder;
+    n /= 10;
+  }
+
+  printf("Reversed number = %d", reverse);
+
+  return 0;
+}
+```   
+<img width="1440" alt="Screenshot 2024-08-14 at 7 54 03 PM" src="https://github.com/user-attachments/assets/d70572b1-913c-44e0-bced-f52302fa6f09">
+
+3. Now compile the program using gcc and get output.
+```
+gcc reverse.c
+```
+```
+./a.out
+```
+<img width="1440" alt="Screenshot 2024-08-14 at 7 55 22 PM" src="https://github.com/user-attachments/assets/72ab847a-084a-471d-aaef-2b1bd2258f1d">
+
+## Compiling the C code using RISC-V GCC. Reverse an integer.
+
+1. Compile the code using RISC-V gcc. reverse.o file will be generated.
+```
+riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o reverse.o reverse.c
+```
+```
+ls -ltr reverse.c
+```
+
+<img width="1440" alt="Screenshot 2024-08-14 at 7 59 36 PM" src="https://github.com/user-attachments/assets/976c1f39-dc52-446b-bd5e-fca05c548880">
+
+2. Check the assembly language using this command.
+```
+riscv64-unknown-elf-objdump -d reverse | less
+```
+<img width="1440" alt="Screenshot 2024-08-14 at 8 00 47 PM" src="https://github.com/user-attachments/assets/a224ee7f-d20e-47d2-9768-09e3dc6d8780">
+
+3. Now check and verify the output using spike.
+```
+spike pk reverse.o
+```
+
+   <img width="1440" alt="Screenshot 2024-08-14 at 8 01 47 PM" src="https://github.com/user-attachments/assets/c6c97870-9e04-4b19-9ed0-eb038c06f11c">
+
+4. Debug your code using spike and verify
+```
+spike -d pk reverse.o
+```
+<img width="1440" alt="Screenshot 2024-08-14 at 8 06 52 PM" src="https://github.com/user-attachments/assets/1b148863-18b3-4dfe-9173-f8c6f4db28e8">
+
+</details>
 
 
 
