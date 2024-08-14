@@ -318,7 +318,7 @@ Output of the instructions:
 
 <details>
  
-<summary><strong>Lab 4:</strong> A C program which reverses an integer, compile with gcc and Risc-V architecture compilers and verify the output also its Spike simulation</summary>
+<summary><strong>Lab 4:</strong> A C program which reverses an integer, compile with gcc and Risc-V architecture compilers and verify the output suing Spike.</summary>
 
 # Lab-4
 ## Compiling the C code in GCC. Reverse an integer.
@@ -363,7 +363,7 @@ gcc reverse.c
 ```
 <img width="1440" alt="Screenshot 2024-08-14 at 7 55 22 PM" src="https://github.com/user-attachments/assets/72ab847a-084a-471d-aaef-2b1bd2258f1d">
 
-## Compiling the C code using RISC-V GCC. Reverse an integer.
+## Compiling the C code using RISC-V GCC.
 
 1. Compile the code using RISC-V gcc. reverse.o file will be generated.
 ```
