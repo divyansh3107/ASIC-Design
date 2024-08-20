@@ -398,8 +398,93 @@ spike -d pk reverse.o
 
 
 
+<details>
+ 
+<summary><strong>Lab 5:</strong> Digital Logic with TL-Verilog using Makerchip</summary>
+
+# Lab-5
+## Combinational Circuits in TL-Verilog.
+
+**Introduction to TL-Verilog and Makerchip:**
+Makerchip supports the Transaction-Level Verilog (TL-Verilog) standard, which represents a significant advancement by removing the need for the legacy features of traditional Verilog and introducing a more streamlined syntax. TL-Verilog enhances design efficiency by adding powerful constructs for pipelines and transactions, making it easier to develop complex digital circuits.
 
 
+![symbols-truth-tables-of-common-logic-gates jpg copy](https://github.com/user-attachments/assets/4a4ab848-ca4e-45b5-b207-a3acc221aad6)
+
+
+
+### 1. Inverter
+
+Code
+```
+$out = ! $in;
+```
+Output waveform
+
+
+<img width="1440" alt="Screenshot 2024-08-21 at 12 23 56 AM" src="https://github.com/user-attachments/assets/c80f3716-a073-42ae-bb91-b5144c247275">
+
+
+### 2. 2-input AND gate
+
+Code
+```
+ $out = $in1 && $in2;
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 26 29 AM" src="https://github.com/user-attachments/assets/db8c83c7-17d3-4a07-91a6-94f1b0ca2785">
+
+
+### 3. 2-input OR gate
+
+Code
+```
+ $out = $in1 || $in2;
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 28 09 AM" src="https://github.com/user-attachments/assets/5c7cf51b-0c3d-41de-ae1d-a676d79de5b7">
+
+
+
+### 4. 2-input XOR gate
+
+Code
+```
+$out = $in1 ^ $in2;
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 29 45 AM" src="https://github.com/user-attachments/assets/a8d584a7-28b3-43b1-b9f2-2e094751ea34">
+
+
+### 5. Operation on Vector
+
+Code
+```
+$out[2:0] = $in1[1:0] + $in2[1:0];
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 31 11 AM" src="https://github.com/user-attachments/assets/a3563e6a-1194-404b-b763-bb1ce0bcfcc0">
+
+
+### 6. 2:1 MUX
+
+Code
+```
+$out = $sel ? $in1 : $in0;
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 32 49 AM" src="https://github.com/user-attachments/assets/10d4aadb-694e-4121-91be-39f144d842b1">
+
+
+
+### 5. 2:1 MUX using Vectors
+
+Code
+```
+$out[3:0] = $sel ? $in1[3:0] : $in0[3:0];
+```
+Output waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 34 22 AM" src="https://github.com/user-attachments/assets/717c7204-c96b-4857-a0c5-d1a40944121c">
 
 
 </details>
