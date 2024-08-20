@@ -647,26 +647,16 @@ Code
 Output Waveform
 
 
+</details>
 
 
 
 
+<details>
+<summary><strong>Lab 6:</strong> Basic RISCV CPU Micro-architecture.</summary>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Lab-6
+## Implementation of the RISC-V CPU Core
 
 
 
