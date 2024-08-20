@@ -508,7 +508,7 @@ Output waveform
 
 
 ## Sequential Circuits in TL-Verilog
-**Introduction**
+**Introduction:**
 A sequential circuit is a type of digital circuit that uses memory components to retain data, enabling it to generate outputs based on both the current inputs and the circuit's prior state. This distinguishes it from combinational circuits, where the output is solely determined by the present inputs without any regard to past activity. Sequential circuits rely on feedback loops and storage elements like flip-flops or registers to keep track of their internal state over time. This internal state, combined with the present input, influences the circuit's behavior, allowing it to perform tasks that require a history of previous inputs or operations, such as counting, storing data, or sequencing events.
 
 ### 1. Fibonacci Series
@@ -579,9 +579,10 @@ $clk_div = *clk;
 Output Waveform
 <img width="1440" alt="Screenshot 2024-08-21 at 12 59 09 AM" src="https://github.com/user-attachments/assets/59121537-c8ec-47f0-96a0-ecbdf5938cf8">
 
-### 1. Cycle Calculator
+### 2. Cycle Calculator
 
-<img width="1440" alt="Screenshot 2024-08-21 at 12 55 42 AM" src="https://github.com/user-attachments/assets/6c4aee9a-ebf9-4909-abdd-5c303a5e3fdf">
+<img width="756" alt="Screenshot 2024-08-21 at 1 00 22 AM" src="https://github.com/user-attachments/assets/e3525284-26c0-469b-bdec-12f3b73f0cd1">
+
 
 Code
 ```
@@ -616,6 +617,18 @@ Code
 Output Waveform
 <img width="1440" alt="Screenshot 2024-08-21 at 1 03 48 AM" src="https://github.com/user-attachments/assets/599a36ff-1f3d-4610-bee0-c99586ff3f5a">
 
+### 3. Cycle Calculator
+
+
+
+
+Code
+```
+
+
+```
+
+Output Waveform
 
 
 
