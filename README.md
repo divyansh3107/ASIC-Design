@@ -617,14 +617,18 @@ Code
 Output Waveform
 <img width="1440" alt="Screenshot 2024-08-21 at 1 03 48 AM" src="https://github.com/user-attachments/assets/599a36ff-1f3d-4610-bee0-c99586ff3f5a">
 
-### 3. Cycle Calculator
+## Validity
+**Introduction:**
+When we generate a waveform, as in previous cases, we receive results for every clock cycle. While there are no compilation errors, logical errors may still be present. These errors can be overlooked during compilation, making them difficult to detect by simply examining the waveforms. Additionally, there may be situations where a "don't care" condition arises, which is irrelevant to our design and should be ignored. To address these issues, we use the concept of validity.
+
+The global clock runs continuously, triggering operations even when they are not needed, which can lead to unnecessary power consumption. In physical implementations, clocks are driven by voltage or current sources, consuming power during each clock cycle. In complex circuits, ignoring unnecessary operations can result in significant power wastage. To minimize power consumption, we remove the clock signal during these unneeded cycles—a process known as clock gating. Validity plays a crucial role in enabling clock gating and ensuring that only necessary operations are executed.
 
 
+### 1. Validity- Total Distance Calculator
 
 
 Code
 ```
-
 
 ```
 
@@ -632,6 +636,15 @@ Output Waveform
 
 
 
+### 2.Validity- Cycle Calculator
+
+
+Code
+```
+
+```
+
+Output Waveform
 
 
 
