@@ -513,6 +513,7 @@ A sequential circuit is a type of digital circuit that uses memory components to
 
 ### 1. Fibonacci Series
 In mathematics, the Fibonacci sequence is a sequence in which each number is the sum of the two preceding ones.
+<img width="579" alt="359608348-6be0adb4-59a0-4c13-978e-5dfe9b1f74e9" src="https://github.com/user-attachments/assets/7245e902-cca7-4175-8548-a33a7855b010">
 
 Code
 ```
@@ -525,6 +526,7 @@ Output Waveform
 
 ### 2. Free Running Counter
 Increases Previous value by 1.
+<img width="198" alt="359608319-d53228bc-fda0-4d34-a14e-2885486ce536" src="https://github.com/user-attachments/assets/9176b013-fb95-4ea4-9cf6-272eb8042b57">
 
 Code
 ```
