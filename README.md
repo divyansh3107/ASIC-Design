@@ -477,7 +477,7 @@ Output waveform
 
 
 
-### 5. 2:1 MUX using Vectors
+### 7. 2:1 MUX using Vectors
 
 Code
 ```
@@ -485,6 +485,164 @@ $out[3:0] = $sel ? $in1[3:0] : $in0[3:0];
 ```
 Output waveform
 <img width="1440" alt="Screenshot 2024-08-21 at 12 34 22 AM" src="https://github.com/user-attachments/assets/717c7204-c96b-4857-a0c5-d1a40944121c">
+
+
+### 8. Combinational Calculator Implementation
+The calculator performs four fundamental arithmetic operations: addition, subtraction, multiplication, and division.
+Code
+```
+$val1[31:0] = $rand1[3:0];
+$val2[31:0] = $rand2[3:0];
+
+$sum[31:0]  = $val1[31:0] + $val2[31:0];
+$diff[31:0] = $val1[31:0] - $val2[31:0];
+$prod[31:0] = $val1[31:0] * $val2[31:0];
+$quot[31:0] = $val1[31:0] / $val2[31:0];
+
+$out[31:0]  = $sel[1] ? ($sel[0] ? $quot[31:0] : $prod[31:0])
+                      : ($sel[0] ? $diff[31:0] : $sum[31:0]);
+```
+Output waveform
+
+<img width="1440" alt="Screenshot 2024-08-21 at 12 39 29 AM" src="https://github.com/user-attachments/assets/889e7e54-9cf9-4c37-a8e1-0b3e963f60a4">
+
+
+## Sequential Circuits in TL-Verilog
+**Introduction**
+A sequential circuit is a type of digital circuit that uses memory components to retain data, enabling it to generate outputs based on both the current inputs and the circuit's prior state. This distinguishes it from combinational circuits, where the output is solely determined by the present inputs without any regard to past activity. Sequential circuits rely on feedback loops and storage elements like flip-flops or registers to keep track of their internal state over time. This internal state, combined with the present input, influences the circuit's behavior, allowing it to perform tasks that require a history of previous inputs or operations, such as counting, storing data, or sequencing events.
+
+### 1. Fibonacci Series
+In mathematics, the Fibonacci sequence is a sequence in which each number is the sum of the two preceding ones.
+
+Code
+```
+$reset = *reset;
+$num[31:0] = $reset ? 1 : (>>1$num + >>2$num);
+```
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 45 04 AM" src="https://github.com/user-attachments/assets/32d223f4-30e2-49ab-808f-2941b3cf7f79">
+
+
+### 2. Free Running Counter
+Increases Previous value by 1.
+
+Code
+```
+$reset = *reset;
+$cnt[31:0] = $reset ? 0 : (>>1$cnt + 1);
+```
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 50 14 AM" src="https://github.com/user-attachments/assets/2d3b7f3b-ccb0-47c5-ad1a-4d0388996880">
+
+
+
+### 3. Sequential Calculator
+It functions similarly to a combinational calculator but simulates a real-world scenario where the result of a previous operation is used a
+
+Code
+```
+$reset = *reset; 
+$val1[31:0] = >>1$out;
+$val2[31:0] = $rand[3:0]; 
+$sum[31:0] =  $val1[31:0] +  $val2[31:0];
+$diff[31:0] =  $val1[31:0] -  $val2[31:0];
+$prod[31:0] =  $val1[31:0] *  $val2[31:0];
+$quot[31:0] =  $val1[31:0] /  $val2[31:0];
+$out[31:0] = $reset ? 32'h0 : ($choose[1] ? ($choose[0] ? $quot : $prod):($choose[0] ? $diff : $sum));
+
+```
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 52 13 AM" src="https://github.com/user-attachments/assets/4296f661-c13f-4f9f-a906-932ce295819c">
+
+
+## Pipelined Logic
+
+In Transaction-Level Verilog (TL-Verilog), pipelined logic is effectively expressed using pipeline constructs that naturally represent data flow through various stages of a digital design. Each stage in a TL-Verilog pipeline corresponds to a clock cycle, performing operations on data as it moves forward. This method enables clear and concise modeling of sequential logic, where each stage automatically manages the propagation of states and values to the next cycle. By utilizing TL-Verilog's pipeline notation, designers can describe complex, multi-stage operations with an emphasis on transaction flow, which simplifies the design and verification process while improving readability and maintainability.
+
+### 1. To produce a Pipelined Design
+
+<img width="1440" alt="Screenshot 2024-08-21 at 12 55 42 AM" src="https://github.com/user-attachments/assets/6c4aee9a-ebf9-4909-abdd-5c303a5e3fdf">
+
+Code
+```
+$reset = *reset;
+$clk_div = *clk;
+|comp
+  @1
+    $err1 = $bad_input || $illegal_op;
+  @3
+    $err2 = $over_flow || $err1;
+  @6
+    $err3 = $div_by_zero || $err2;
+```
+
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 12 59 09 AM" src="https://github.com/user-attachments/assets/59121537-c8ec-47f0-96a0-ecbdf5938cf8">
+
+### 1. Cycle Calculator
+
+<img width="1440" alt="Screenshot 2024-08-21 at 12 55 42 AM" src="https://github.com/user-attachments/assets/6c4aee9a-ebf9-4909-abdd-5c303a5e3fdf">
+
+Code
+```
+|calc
+  @1
+    $reset = *reset;
+    $clk_div = *clk;
+   
+    $val1[31:0] = >>2$out[31:0];
+    $val2[31:0] = $rand2[3:0];
+    $sel[1:0] = $rand3[1:0];
+   
+    $sum[31:0] = $val1[31:0] + $val2[31:0];
+    $diff[31:0] = $val1[31:0] - $val2[31:0];
+    $prod[31:0] = $val1[31:0] * $val2[31:0];
+    $quot[31:0] = $val1[31:0] / $val2[31:0];
+         
+    $count = $reset ? 0 : >>1$count + 1;
+         
+  @2
+    $valid = $count;
+    $inv_valid = !$valid;
+    $calc_reset = $reset | $inv_valid;
+    $out[31:0] = $calc_reset ? 32'b0 : ($op[1] ? ($op[0] ? $quot[31:0] : $prod[31:0])
+                                             : ($op[0] ? $diff[31:0] 
+                                                        : $sum[31:0]));
+
+
+
+```
+
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 1 03 48 AM" src="https://github.com/user-attachments/assets/599a36ff-1f3d-4610-bee0-c99586ff3f5a">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </details>
