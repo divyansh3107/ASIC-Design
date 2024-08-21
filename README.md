@@ -1,4 +1,4 @@
-<img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/0bb620a3-6aa7-4654-a086-580ddc923089"># ASIC-Design
+# ASIC-Design
 # Divyansh Singhal (IMT2021522)
 <details>
 <summary><strong>Lab 1:</strong> Create a C program to find the sum of `n` natural numbers, compile it using the GCC compiler, and verify the output after execution and after that also using RISC-V compiler.</summary>
@@ -2194,7 +2194,7 @@ Output
 ![Uploading Screenshot 2024-08<img width="720" alt="Screenshot 2024-08-22 at 1 51 49 AM" src="https://github.com/user-attachments/assets/16238ff8-0adb-446e-a37b-c5254a0c1f8a">
 -22 at 1.51.42 AM.png…]()
 <img width="1440" alt="Screenshot 2024-08-22 at 1 55 43 AM" src="https://github.com/user-attachments/assets/6cd88ade-c476-4716-b0eb-e883f024e7bc">
-
+<img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/0bb620a3-6aa7-4654-a086-580ddc923089">
 
 Observation:- A 5-stage pipeline design, using clk_div, computes the sum of numbers from 1 to 9 across various stages. The stages include Instruction Fetch, Instruction Decode, Execute, Memory Access, and Write-back. The entire process takes 58 cycles to complete.
 
