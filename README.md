@@ -2208,7 +2208,7 @@ Output
 ![360048222-4187e1ec-16ca-4996-86b5-636452acff7b](https://github.com/user-attachments/assets/a95869d8-bc97-43b9-8c5b-0dd7d49cd844)
 
 
-
+Observation:- A 5-stage pipeline design, using clk_yog, computes the sum of numbers from 1 to 9 across various stages. The stages include Instruction Fetch, Instruction Decode, Execute, Memory Access, and Write-back. The entire process takes 58 cycles to complete.
 
 
 
