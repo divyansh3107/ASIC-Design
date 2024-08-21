@@ -416,7 +416,7 @@ Makerchip supports the Transaction-Level Verilog (TL-Verilog) standard, which re
 ### 1. Inverter
 
 Code
-```
+```tl-verilog
 $out = ! $in;
 ```
 Output waveform
@@ -428,7 +428,7 @@ Output waveform
 ### 2. 2-input AND gate
 
 Code
-```
+```tl-verilog
  $out = $in1 && $in2;
 ```
 Output waveform
@@ -438,7 +438,7 @@ Output waveform
 ### 3. 2-input OR gate
 
 Code
-```
+```tl-verilog
  $out = $in1 || $in2;
 ```
 Output waveform
@@ -449,7 +449,7 @@ Output waveform
 ### 4. 2-input XOR gate
 
 Code
-```
+```tl-verilog
 $out = $in1 ^ $in2;
 ```
 Output waveform
@@ -459,7 +459,7 @@ Output waveform
 ### 5. Operation on Vector
 
 Code
-```
+```tl-verilog
 $out[2:0] = $in1[1:0] + $in2[1:0];
 ```
 Output waveform
@@ -469,7 +469,7 @@ Output waveform
 ### 6. 2:1 MUX
 
 Code
-```
+```tl-verilog
 $out = $sel ? $in1 : $in0;
 ```
 Output waveform
@@ -480,7 +480,7 @@ Output waveform
 ### 7. 2:1 MUX using Vectors
 
 Code
-```
+```tl-verilog
 $out[3:0] = $sel ? $in1[3:0] : $in0[3:0];
 ```
 Output waveform
@@ -490,7 +490,7 @@ Output waveform
 ### 8. Combinational Calculator Implementation
 The calculator performs four fundamental arithmetic operations: addition, subtraction, multiplication, and division.
 Code
-```
+```tl-verilog
 $val1[31:0] = $rand1[3:0];
 $val2[31:0] = $rand2[3:0];
 
@@ -516,7 +516,7 @@ In mathematics, the Fibonacci sequence is a sequence in which each number is the
 <img width="579" alt="359608348-6be0adb4-59a0-4c13-978e-5dfe9b1f74e9" src="https://github.com/user-attachments/assets/7245e902-cca7-4175-8548-a33a7855b010">
 
 Code
-```
+```tl-verilog
 $reset = *reset;
 $num[31:0] = $reset ? 1 : (>>1$num + >>2$num);
 ```
@@ -529,7 +529,7 @@ Increases Previous value by 1.
 <img width="198" alt="359608319-d53228bc-fda0-4d34-a14e-2885486ce536" src="https://github.com/user-attachments/assets/9176b013-fb95-4ea4-9cf6-272eb8042b57">
 
 Code
-```
+```tl-verilog
 $reset = *reset;
 $cnt[31:0] = $reset ? 0 : (>>1$cnt + 1);
 ```
@@ -542,7 +542,7 @@ Output Waveform
 It functions similarly to a combinational calculator but simulates a real-world scenario where the result of a previous operation is used a
 
 Code
-```
+```tl-verilog
 $reset = *reset; 
 $val1[31:0] = >>1$out;
 $val2[31:0] = $rand[3:0]; 
@@ -566,7 +566,7 @@ In Transaction-Level Verilog (TL-Verilog), pipelined logic is effectively expres
 <img width="1440" alt="Screenshot 2024-08-21 at 12 55 42 AM" src="https://github.com/user-attachments/assets/6c4aee9a-ebf9-4909-abdd-5c303a5e3fdf">
 
 Code
-```
+```tl-verilog
 $reset = *reset;
 $clk_div = *clk;
 |comp
@@ -587,7 +587,7 @@ Output Waveform
 
 
 Code
-```
+```tl-verilog
 |calc
   @1
     $reset = *reset;
@@ -630,7 +630,7 @@ The global clock runs continuously, triggering operations even when they are not
 
 
 Code
-```
+```tl-verilog
 |calc
 @1 
          $reset = *reset;
@@ -656,7 +656,7 @@ Output Waveform
 
 
 Code
-```
+```tl-verilog
 
 ```
 
@@ -689,7 +689,7 @@ The Program Counter (PC) is a register that holds the address of the next instru
 
 Code
 
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -772,7 +772,7 @@ The Instruction Fetch Unit (IFU) in a CPU is responsible for managing the sequen
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    //  This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -862,7 +862,7 @@ There are 6 types of instructions.
 <img width="661" alt="Screenshot 2024-08-10 at 7 35 56 PM" src="https://github.com/user-attachments/assets/8357de63-b6a2-43e6-b74d-04e8cf306e0c">
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -1023,7 +1023,7 @@ Most instructions, especially arithmetic ones, operate on source registers, nece
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -1193,7 +1193,7 @@ The Arithmetic Logic Unit (ALU) is tasked with computing results based on the se
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -1367,7 +1367,7 @@ This step is essential for managing instructions that require storing the output
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -1544,7 +1544,7 @@ The final step is to incorporate support for branch instructions. In the RISC-V 
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
