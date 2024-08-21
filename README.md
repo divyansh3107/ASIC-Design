@@ -1927,10 +1927,10 @@ Code
 \TLV
 
    // /====================\
-   // | Sum 0 to 10 Program |
+   // | Sum 1 to 9 Program |
    // \====================/
    //
-   // Add 0,1,2,3,...,10 (in that order).
+   // Add 0,1,2,3,...,9 (in that order).
    //
    // Regs:
    //  r10 (a0): In: 0, Out: final sum
@@ -2192,8 +2192,8 @@ Output
 ![360048714-c228e752-a8b4-45f4-8776-0a578b7a7bf1](https://github.com/user-attachments/assets/c7bd9ab0-aac7-41b2-9180-f51f93eccaf9)
 ![360048222-4187e1ec-16ca-4996-86b5-636452acff7b](https://github.com/user-attachments/assets/a95869d8-bc97-43b9-8c5b-0dd7d49cd844)
 <img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/1a477614-078f-49d7-a115-633edf8ddac2">
+<img width="720" alt="Screenshot 2024-08-22 at 1 51 49 AM" src="https://github.com/user-attachments/assets/fa09e516-e6a0-4284-a612-a2a9c8a72978">
 
-<img width="1440" alt="Screenshot 2024-08-22 at 1 55 43 AM" src="https://github.com/user-attachments/assets/6cd88ade-c476-4716-b0eb-e883f024e7bc">
 <img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/0bb620a3-6aa7-4654-a086-580ddc923089">
 
 Observation:- A 5-stage pipeline design, using clk_div, computes the sum of numbers from 1 to 9 across various stages. The stages include Instruction Fetch, Instruction Decode, Execute, Memory Access, and Write-back. The entire process takes 58 cycles to complete.
