@@ -1183,8 +1183,9 @@ Code
 ```
 
 Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 6 59 56 PM" src="https://github.com/user-attachments/assets/904aee3b-a3bf-47a6-b8ef-2dcfc20ddf29">
 
-<img width="1440" alt="Screenshot 2024-08-21 at 6 52 00 PM" src="https://github.com/user-attachments/assets/528de813-052a-4a43-8462-fe76fa404862">
+
 
 
 ### 5. Arithmetic Logic Unit (ALU)
