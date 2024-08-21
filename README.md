@@ -1761,7 +1761,7 @@ Output Waveform
 
 
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    m4_include_lib(['https://raw.githubusercontent.com/stevehoover/RISC-V_MYTH_Workshop/c1719d5b338896577b79ee76c2f443ca2a76e14f/tlv_lib/risc-v_shell_lib.tlv'])
@@ -1915,7 +1915,7 @@ When the following line of code as mentioned below is added on Makerchip, the si
 *passed = |cpu/xreg[10]>>5$value == (1+2+3+4+5+6+7+8+9);
 ```
 Code
-```
+```tl-verilog
 \m4_TLV_version 1d: tl-x.org
 \SV
    // Template code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
@@ -2191,8 +2191,8 @@ Output
 ![360049026-b9f6e0df-c21a-4024-9aa0-2decdd9c440c](https://github.com/user-attachments/assets/99233d36-f970-439d-9224-69a250979bce)
 ![360048714-c228e752-a8b4-45f4-8776-0a578b7a7bf1](https://github.com/user-attachments/assets/c7bd9ab0-aac7-41b2-9180-f51f93eccaf9)
 ![360048222-4187e1ec-16ca-4996-86b5-636452acff7b](https://github.com/user-attachments/assets/a95869d8-bc97-43b9-8c5b-0dd7d49cd844)
-![Uploading Screenshot 2024-08<img width="720" alt="Screenshot 2024-08-22 at 1 51 49 AM" src="https://github.com/user-attachments/assets/16238ff8-0adb-446e-a37b-c5254a0c1f8a">
--22 at 1.51.42 AM.png…]()
+<img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/1a477614-078f-49d7-a115-633edf8ddac2">
+
 <img width="1440" alt="Screenshot 2024-08-22 at 1 55 43 AM" src="https://github.com/user-attachments/assets/6cd88ade-c476-4716-b0eb-e883f024e7bc">
 <img width="1439" alt="Screenshot 2024-08-22 at 1 51 42 AM" src="https://github.com/user-attachments/assets/0bb620a3-6aa7-4654-a086-580ddc923089">
 
