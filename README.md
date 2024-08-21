@@ -631,10 +631,24 @@ The global clock runs continuously, triggering operations even when they are not
 
 Code
 ```
-
+|calc
+@1 
+         $reset = *reset;
+         $clk_div = *clk;
+      ?$valid
+         @1
+            $aa_sq[31:0] = $aa[3:0] * $aa[3:0];
+            $bb_sq[31:0] = $bb[3:0] * $bb[3:0];
+         @2
+            $cc_sq[31:0] = $aa_sq + $bb_sq;
+         @3
+            $cc[31:0] = sqrt($cc_sq);
+         @4
+            $tot_dist[63:0] = $reset ? 0 : $valid ? (>>1$tot_dist +$cc) : >>1$tot_dist;
 ```
 
 Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 2 36 41 PM" src="https://github.com/user-attachments/assets/cb1a995c-2da7-4620-b681-23ee8496ae2f">
 
 
 
