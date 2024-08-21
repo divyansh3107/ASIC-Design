@@ -674,6 +674,39 @@ Output Waveform
 # Lab-6
 ## Implementation of the RISC-V CPU Core
 
+Block Diagram
+
+![1](https://github.com/user-attachments/assets/36c614a2-b5c1-4eab-a2ea-36c7c54f2755)
+
+
+
+### 1. Program Counter(PC) and next PC Logic
+
+The Program Counter (PC) is a register that holds the address of the next instruction to be executed, acting as a pointer to the instruction memory. Since the memory is byte-addressable and each instruction is 32 bits long, the PC increments by 4 bytes after each instruction to point to the subsequent one. When the program begins, a reset signal initializes the PC to 0, ensuring that the first instruction is fetched from the correct starting point. For branch instructions, an immediate value is added to the current PC, producing a new address calculated as: NextPC = Incremented PC + Offset value. Typically, the PC increments by 4 to fetch the next sequential instruction, but it resets to zero if a reset signal is received. The accompanying diagram shows the PC's operation, illustrating its progression through instructions and its behavior during resets and branch operations.
+
+
+<img width="777" alt="2" src="https://github.com/user-attachments/assets/c085854d-b31f-428e-a0f1-c4ef73cec312">
+
+Code
+
+```
+$reset = *reset;
+$clk_div = *clk;
+$reset = *reset;
+
+|cpu
+  @0
+    $reset = *reset;
+    $pc[31:0] = >>1$reset ? 32'b0 : >>1$pc + 32'd4;
+```
+
+Output Waveform
+<img width="1440" alt="Screenshot 2024-08-21 at 3 08 52 PM" src="https://github.com/user-attachments/assets/f4f71ac6-506e-44c7-ae1c-13e2e9cedf41">
+
+
+
+
+
 
 
 
