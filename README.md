@@ -2515,13 +2515,19 @@ gtkwave pre_synth_sim.vcd
 
 ### Waveforms from Makerchip platform IDE by running .tlv file for comparison
 
+#### Clk
+
+<img width="1439" alt="3" src="https://github.com/user-attachments/assets/6eb96e21-d6b7-4719-ba0c-e2a4a2d1b11b">
+
+#### Reset
+![2](https://github.com/user-attachments/assets/15dfbeff-b072-4e64-8310-5379aca39a95)
+
+#### Waveform
+![1](https://github.com/user-attachments/assets/3729db08-2662-4615-8d2c-865b0256c363)
 
 
-
-
-
-
-### Waveforms from GTKwave platform by running .v file after conversion
+### Waveforms from GTKwave platform by running .v file after conversion 
+#### Clk,Reset, Waveforms in one
 <img width="1440" alt="Screenshot 2024-08-26 at 2 30 03 PM" src="https://github.com/user-attachments/assets/31215721-f406-43b1-b5a0-1cd827cda11b">
 
 We can see the gradual increment in sum from 0 to 9 in the end the sum of numbers from 0 to 9 is 45 which is Ox2D in hexadecimal.
