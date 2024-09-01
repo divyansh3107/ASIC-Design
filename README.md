@@ -2532,9 +2532,74 @@ gtkwave pre_synth_sim.vcd
 
 We can see the gradual increment in sum from 0 to 9 in the end the sum of numbers from 0 to 9 is 45 which is Ox2D in hexadecimal.
 
+<details>
+<summary><strong>Lab 8:</strong> To generate waveform for DAC and PLL peripheral for Risc-V processor.</summary>
+
+# Lab-8
+## To generate waveform for DAC and PLL peripheral for Risc-V processor.
+
+
+The VSDBabySoC is a compact yet powerful SoC based on the RISCV architecture. It was designed with the primary goal of testing three open-source IP cores together for the first time and calibrating the analog components. The SoC includes an RVMYTH microprocessor, an 8x-PLL for stable clock generation, and a 10-bit DAC for communication with other analog devices.
+
+![6](https://github.com/user-attachments/assets/00eb65f1-60fc-4758-afe6-38b293beaf8f)
+
+### BabySoC Simulation
+Developing and simulating the complete micro-architecture of a RISC-V CPU is a complex task. For this simulation, we'll focus on incorporating two key IP blocks: PLL and DAC.
+
+
+### Phase-Locked Loop (PLL)
+A Phase-Locked Loop (PLL) is an electronic circuit designed to synchronize the phase and frequency of an output signal with that of a reference signal. It typically comprises three main components:
+
+#### Phase Detector: This component compares the phases of the reference signal and the output signal, generating an error signal that represents their difference.
+#### Loop Filter: It smooths out the error signal to reduce noise and enhance system stability.
+Voltage-Controlled Oscillator (VCO): The VCO adjusts its output frequency in response to the filtered error signal, working to minimize the phase difference.
+PLLs are commonly used in applications like clock generation, frequency synthesis, and data recovery in communication systems.
+
+### Digital-to-Analog Converter (DAC)
+A Digital-to-Analog Converter (DAC) translates digital signals (usually in binary form) into analog signals, such as voltage or current. This conversion is crucial in systems where digital data must interact with analog devices or be presented in a form perceivable by humans, like in audio or video output.
+
+DACs are widely used in applications such as audio playback, video display, and signal processing.
+
+
+1. Clone this repo: https://github.com/Subhasis-Sahu/BabySoC_Simulation.git using the following command.
+```
+git clone https://github.com/Subhasis-Sahu/BabySoC_Simulation.git
+```
+```bash
+cd BabySoC_Simulation
+```
+
+<img width="1440" alt="Screenshot 2024-09-02 at 1 01 19 AM" src="https://github.com/user-attachments/assets/c0f2e9e8-aae6-4497-80e7-c772f87ca9a1">
+
+2. Then run the following commands, also you have to change rvmyth.v from the previous labs as shown.
+<img width="1440" alt="Screenshot 2024-09-02 at 1 01 29 AM" src="https://github.com/user-attachments/assets/a6160320-cc39-4380-ae2d-cd99df69dca5">
+<img width="1440" alt="Screenshot 2024-09-02 at 1 02 03 AM" src="https://github.com/user-attachments/assets/e24af8bd-30d2-45a0-84c6-b0648ab05771">
+
+```bash
+iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+```
+<img width="1440" alt="Screenshot 2024-09-02 at 1 02 29 AM" src="https://github.com/user-attachments/assets/3696b017-24bc-4d1f-8018-db247c52285e">
+
+
+```bash
+./pre_synth_sim.out
+```
+<img width="1440" alt="Screenshot 2024-09-02 at 1 02 38 AM" src="https://github.com/user-attachments/assets/792cb409-c962-4a2e-ac54-7208671e23d2">
+
+3. Open GTKwave
+```
+gtkwave pre_synth_sim.vcd
+```
+<img width="1440" alt="Screenshot 2024-09-02 at 1 21 20 AM" src="https://github.com/user-attachments/assets/d9afa8ae-4a71-4833-a91c-c89fba5c9c33">
+
+
+### Waveforms 
+<img width="1440" alt="Screenshot 2024-09-02 at 1 06 22 AM" src="https://github.com/user-attachments/assets/e4e33b42-3d4b-450b-8c7d-b877dc889d8e">
 
 
 
+NOTE: This my system of college os SARL-LAB (I have created a folder to show my name)
+</details>
 
 
 
