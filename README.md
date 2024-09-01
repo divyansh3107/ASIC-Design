@@ -2531,6 +2531,7 @@ gtkwave pre_synth_sim.vcd
 <img width="1440" alt="Screenshot 2024-08-26 at 2 30 03 PM" src="https://github.com/user-attachments/assets/31215721-f406-43b1-b5a0-1cd827cda11b">
 
 We can see the gradual increment in sum from 0 to 9 in the end the sum of numbers from 0 to 9 is 45 which is Ox2D in hexadecimal.
+</details>
 
 <details>
 <summary><strong>Lab 8:</strong> To generate waveform for DAC and PLL peripheral for Risc-V processor.</summary>
@@ -2598,7 +2599,7 @@ gtkwave pre_synth_sim.vcd
 
 
 
-NOTE: This my system of college os SARL-LAB (I have created a folder to show my name)
+NOTE: This my system of college os SARL-LAB (I have created a folder to show my name). The simulation successfully demonstrates the integration of DAC and PLL peripherals with the RISC-V processor, converting digital outputs to analog signals.
 </details>
 
 
