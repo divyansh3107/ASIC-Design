@@ -2604,6 +2604,30 @@ NOTE: This my system of college os SARL-LAB (I have created a folder to show my 
 
 
 
+<details>
+<summary><strong>Laboratory 9:</strong>RTL design using Verilog with SKY130 Technology.</summary>
+
+---
+<details>
+<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+
+### 1.1. Introduction to open source simulator iverilog
+
+In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
+
+**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
+
+**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
+
+<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
+
+
+
+
+</details>
+</details>
+
+
 
 
 
