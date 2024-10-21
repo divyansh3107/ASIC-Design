@@ -3172,49 +3172,654 @@ write_verilog -noattr mult_8_net.v
 <details>
 <summary><strong>Day 3:</strong> Combinational and sequential optimizations.</summary>
 
+**Logic Circuits**
 
+Combinational circuits are defined as the time independent circuits which do not depends upon previous inputs to generate any output are termed as combinational circuits. Sequential circuits are those which are dependent on clock cycles and depends on present as well as past inputs to generate any output.
+
+### 3.1. Introduction to Logic Optimizations
+
+### Combinational Logic Optimization
+**Why do we need Combinational Logic Optimizations?**
+
+* Primarily to squeeze the logic to get the most optimized design.
+    * An optimized design results in comprehensive Area and Power saving.
+
+#### Types of Combinational Optimizations
+
+* Constant Propagation 
+	* Direct Optimization technique
+* Boolean Logic Optimization.
+	* Karnaugh map
+	* Quine Mckluskey
+
+#### CONSTANT PROPAGATION
+
+In Constant propagation techniques, inputs that are no way related or affecting the changes in the output are ignored/optimized to simplify the combination logic thereby saving area and power usage by those input pins.
+<img width="752" alt="Screenshot 2024-10-21 at 11 20 55 PM" src="https://github.com/user-attachments/assets/b91cc863-ebb2-43b9-98f2-5182b9f40887">
+
+
+```
+Y =((AB)+ C)'
+If A = 0
+Y =((0)+ C)' = C'
+```
+#### BOOLEAN LOGIC OPTIMIZATION
+
+
+Boolean logic optimization is nothing simplifying a complex boolean expression into a simplified expression by utilizing the laws of boolean logic algebra.
+```
+assign y = a?(b?c:(c?a:0)):(!c)
+```
+above is simplified as
+```
+y = a'c' + a(bc + b'ca) 
+y = a'c' + abc + ab'c 
+y = a'c' + ac(b+b') 
+y = a'c' + ac
+y = a xnor c
+```
+<img width="527" alt="Screenshot 2024-10-21 at 11 21 35 PM" src="https://github.com/user-attachments/assets/49eeea6c-46dc-46c4-9c4c-ec08763f6779">
+
+The circuit can be optimised as follows:
+<img width="745" alt="Screenshot 2024-10-21 at 11 21 43 PM" src="https://github.com/user-attachments/assets/863a6e80-85ae-4972-95ec-77b78135f20b">
+
+
+### Sequential Logic Optimization
+
+#### Types of Sequential Optimizations
+
+* Basic Technique
+	* Sequential Constant Propagation
+* Advanced Technique
+	* State Optimization
+	* Retiming
+	* Sequential Logic cloning(Floorplan aware synthesis)
+	
+#### COMBINATIONAL LOGIC OPTIMIZATION  
+
+**Example 1:**
+
+Verllog code:
+
+```
+module opt_check (input a , input b , output y);
+	assign y = a?b:0;
+endmodule
+```
+
+The above code infers a multiplexer and since one of the inputs of the multiplexer is always connected to the ground it will infer an AND gate on optimisation.
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check.v
+synth -top opt_check
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr opt_check_net.v
+!gedit opt_check_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 23 20 PM" src="https://github.com/user-attachments/assets/57bf19f3-bd4c-45b2-bca5-d5d82834d01d">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 23 43 PM" src="https://github.com/user-attachments/assets/48e7e104-2ed5-4e9b-8593-d4f7981b1513">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 24 02 PM" src="https://github.com/user-attachments/assets/75b7a358-35e2-4517-bf8a-0278fe2ef0bf">
+
+
+**Example 2:**
+
+Verllog code:
+
+```
+module opt_check2 (input a , input b , output y);
+	assign y = a?1:b;
+endmodule
+```
+
+Since one of the inputs of the multiplexer is always connected to the logic 1 it will infer an OR gate on optimisation.The OR gate will be NAND implementation since NOR gate has stacked pmos while NAND implementation has stacked nmos.
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check2.v
+synth -top opt_check2
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr opt_check2_net.v
+!gedit opt_check2_net.v
+```
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 25 53 PM" src="https://github.com/user-attachments/assets/2ad9f1e9-9e3a-4947-8127-ef5df917411e">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 26 10 PM" src="https://github.com/user-attachments/assets/425de2e8-b1e9-42b4-b8e6-52dc0fdd9073">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 26 23 PM" src="https://github.com/user-attachments/assets/dba2a189-472e-4403-8347-1a9fd61a3ec0">
+
+
+**Example 3:**
+
+Verilog code:
+
+```
+module opt_check3 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+
+On optimisation the above design becomes a 3 input AND gate.
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check3.v
+synth -top opt_check3
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr opt_check3_net.v
+!gedit opt_check3_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 29 24 PM" src="https://github.com/user-attachments/assets/96f9ad9d-1e28-4043-a6f5-385613fcfe5d">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 29 45 PM" src="https://github.com/user-attachments/assets/b712e088-1b2e-478d-a674-bbede3d9cedb">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 29 59 PM" src="https://github.com/user-attachments/assets/58d4a28e-ba14-4c9e-9575-9211dba5b0e0">
+
+
+
+
+**Example 4:**
+
+Verilog code:
+
+```
+module opt_check4 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+
+On optimisation the above design becomes a 2 input XNOR gate.
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check4.v
+synth -top opt_check4
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr opt_check4_net.v
+!gedit opt_check4_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 31 13 PM" src="https://github.com/user-attachments/assets/e9da858c-a090-4df5-a6fb-106ff984e13e">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 31 32 PM" src="https://github.com/user-attachments/assets/fd41e344-ceeb-4547-9aa8-951294381b5b">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 31 49 PM" src="https://github.com/user-attachments/assets/42c72335-aa17-40a7-bc8d-5ce9f2f34b34">
+
+
+**Example 5:**
+Verilog code:
+
+```
+module sub_module1(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+module sub_module2(input a , input b , output y);
+ assign y = a^b;
+endmodule
+
+module multiple_module_opt(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module1 U1 (.a(a) , .b(1'b1) , .y(n1));
+sub_module2 U2 (.a(n1), .b(1'b0) , .y(n2));
+sub_module2 U3 (.a(b), .b(d) , .y(n3));
+
+assign y = c | (b & n1); 
+
+endmodule
+```
+
+On optimisation the above design becomes a AND OR gate
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_module_opt.v
+synth -top multiple_module_opt
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+flatten
+show
+write_verilog -noattr multiple_module_opt_net.v
+!gedit multiple_module_opt_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 34 07 PM" src="https://github.com/user-attachments/assets/d4828f92-2fdc-445d-8a77-01381715edc8">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 34 44 PM" src="https://github.com/user-attachments/assets/39e9ba2a-d6fb-4b94-8952-d954a2d1725d">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 34 58 PM" src="https://github.com/user-attachments/assets/f91aaf7c-7832-4329-94fd-caa1b5d03a71">
+
+
+
+**Example 6:**
+
+Verilog code:
+
+```
+module sub_module(input a , input b , output y);
+	assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a , input b , input c , input d , output y);
+		wire n1,n2,n3;
+	sub_module U1 (.a(a) , .b(1'b0) , .y(n1));
+	sub_module U2 (.a(b), .b(c) , .y(n2));
+	sub_module U3 (.a(n2), .b(d) , .y(n3));
+	sub_module U4 (.a(n3), .b(n1) , .y(y));
+endmodule
+```
+
+On optimisation the above design becomes Y=0 
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_module_opt2.v
+synth -top multiple_module_opt2
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+flatten
+show
+write_verilog -noattr multiple_module_opt2_net.v
+!gedit multiple_module_opt2_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 35 28 PM" src="https://github.com/user-attachments/assets/4a4ad34f-329b-4e43-9704-51ea88c8dbac">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 38 15 PM" src="https://github.com/user-attachments/assets/b80afba3-3c62-4606-b7a8-147c1173c92b">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 36 09 PM" src="https://github.com/user-attachments/assets/7c837dd3-214d-4f50-9e1c-4e56fa9e85d9">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 36 11 PM" src="https://github.com/user-attachments/assets/bb0d744e-8c5c-4ed2-9c51-ed6e1715d06d">
+
+
+
+**Sequential Logic Optimizations**
+
+**Example 1:**
+
+Verilog code:
+
+```
+module dff_const1(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b0;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const1.v
+synth -top dff_const1
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr dff_const1_net.v
+!gedit dff_const1_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 44 05 PM" src="https://github.com/user-attachments/assets/07a812d5-3a41-4f50-b74c-032707358075">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 44 44 PM" src="https://github.com/user-attachments/assets/c6f72d08-5f3a-49eb-a0c9-5054b90fafe4">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 44 59 PM" src="https://github.com/user-attachments/assets/3773fa53-a74c-46ff-973c-3eb8e910c989">
+
+
+
+GTKWave Output:
+
+```
+iverilog dff_const1.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const1.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 46 04 PM" src="https://github.com/user-attachments/assets/dc41716a-c8b3-4739-b493-f9d7465329a6">
+
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 46 01 PM" src="https://github.com/user-attachments/assets/5c63f175-c2a7-4677-965a-7b2727bf4692">
+
+
+
+
+
+**Example 2:**
+
+Verilog code:
+
+```
+module dff_const2(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b1;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const2.v
+synth -top dff_const2
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr dff_const2_net.v
+!gedit dff_const2_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 46 51 PM" src="https://github.com/user-attachments/assets/319bed6d-2b62-4396-a190-e1a710e20c38">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 47 13 PM" src="https://github.com/user-attachments/assets/ccb77e20-ad82-420f-824a-dd7caed02f6c">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 47 23 PM" src="https://github.com/user-attachments/assets/8ee9c16b-44f4-4b51-8450-a6cc3527353c">
+
+
+GTKWave Output:
+
+```
+iverilog dff_const2.v tb_dff_const2.v
+./a.out
+gtkwave tb_dff_const2.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 48 05 PM" src="https://github.com/user-attachments/assets/0097275e-b53e-43e1-8e2d-175e4fe8ca87">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 48 01 PM" src="https://github.com/user-attachments/assets/2c2c8a34-ce08-43fe-95bf-fa12e2be16bb">
+
+
+
+**Example 3:**
+
+Verilog code:
+
+```
+module dff_const3(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b0;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+endmodule
+```
+
+Run the below code for netlist:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const3.v
+synth -top dff_const3
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr dff_const3_net.v
+!gedit dff_const3_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 48 47 PM" src="https://github.com/user-attachments/assets/674f301d-f685-4f8c-87ae-b14c69ea7d6e">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 49 05 PM" src="https://github.com/user-attachments/assets/7cafcb21-80c2-40c6-9a90-2befaceac4e2">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 49 15 PM" src="https://github.com/user-attachments/assets/f0157e94-a5c6-432c-9f6d-242f17ac9e0b">
+
+
+
+GTKWave Output:
+
+```
+iverilog dff_const3.v tb_dff_const3.v
+./a.out
+gtkwave tb_dff_const3.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 50 48 PM" src="https://github.com/user-attachments/assets/528e0e5a-3701-4268-a449-0f5b47998d2a">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 11 49 48 PM" src="https://github.com/user-attachments/assets/638be51b-217c-4df1-9389-46664504812d">
+
+
+
+**Example 4:**
+
+Verilog code:
+
+```
+module dff_const4(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b1;
+	end
+else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+endmodule
+```
+
+Run the below code for netlist:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const4.v
+synth -top dff_const4
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr dff_const4_net.v
+!gedit dff_const4_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 51 26 PM" src="https://github.com/user-attachments/assets/dc9f5e9a-e84a-4997-b8bc-de33f495561b">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 51 47 PM" src="https://github.com/user-attachments/assets/b57db890-8178-47af-93e5-e40b2e489623">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 52 10 PM" src="https://github.com/user-attachments/assets/41ef9cee-15f7-4110-aed8-8d3147ccdf3f">
+
+
+ 
+GTKWave Output:
+
+```
+iverilog dff_const4.v tb_dff_const4.v
+./a.out
+gtkwave tb_dff_const4.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 53 39 PM" src="https://github.com/user-attachments/assets/1265f73e-4fa9-4332-b093-c50da090aa77">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 53 36 PM" src="https://github.com/user-attachments/assets/c645b33d-d9f7-442c-94d9-a97badea21ca">
+
+
+
+**Example 5:**
+
+Verilog code:
+
+```
+module dff_const5(input clk, input reset, output reg q);
+reg q1;
+always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b0;
+			q1 <= 1'b0;
+		end
+	else
+		begin
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const5.v
+synth -top dff_const5
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr dff_const5_net.v
+!gedit dff_const5_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 54 44 PM" src="https://github.com/user-attachments/assets/9963c7c2-8235-4dfc-9d9e-33d27b663f84">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 55 02 PM" src="https://github.com/user-attachments/assets/54d98495-6414-4289-b84f-d6cb2369a243">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 55 14 PM" src="https://github.com/user-attachments/assets/d8b64c12-138a-462a-af60-13ea808af710">
+
+
+
+GTKWave Output:
+
+```
+iverilog dff_const5.v tb_dff_const5.v
+./a.out
+gtkwave tb_dff_const5.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 56 26 PM" src="https://github.com/user-attachments/assets/9c36a5e9-14d7-46b8-87d7-4313a04c29e5">
+<img width="1440" alt="Screenshot 2024-10-21 at 11 56 22 PM" src="https://github.com/user-attachments/assets/95ef85eb-206f-4b1e-9d91-4f10b6a1beba">
+
+
+**Sequential Logic Optimizations for unused outputs**
+
+**Example 1:**
+
+Verilog code:
+
+```
+module counter_opt (input clk , input reset , output q);
+reg [2:0] count;
+assign q = count[0];
+always @(posedge clk ,posedge reset)
+begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+end
+endmodule
+```
+
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt.v
+synth -top counter_opt
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr counter_opt_net.v
+!gedit counter_opt_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 11 59 44 PM" src="https://github.com/user-attachments/assets/aecac502-9930-492f-a3bb-4a094c083710">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 00 06 AM" src="https://github.com/user-attachments/assets/54244b6a-304a-42a6-9578-bda5f4f62a7d">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 00 17 AM" src="https://github.com/user-attachments/assets/6a4434b6-b848-4d1c-ad56-a41c1ed15dde">
+
+
+GTKWave Output:
+
+```
+iverilog counter_opt.v tb_counter_opt.v
+./a.out
+gtkwave tb_counter_opt.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-22 at 12 01 21 AM" src="https://github.com/user-attachments/assets/2f767ea5-7ac7-4314-80aa-b6a016bf4ce3">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 01 18 AM" src="https://github.com/user-attachments/assets/32a5f91b-8fb2-4f08-86a4-5b17d3af0aea">
+
+
+
+Modified counter logic:
+
+Verilog code:
+
+```
+module counter_opt (input clk , input reset , output q);
+reg [2:0] count;
+assign q = {count[2:0]==3'b100};
+always @(posedge clk ,posedge reset)
+begin
+if(reset)
+	count <= 3'b000;
+else
+	count <= count + 1;
+end
+endmodule
+```
+Run the below code for netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt2.v
+synth -top counter_opt
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr counter_opt2_net.v
+!gedit counter_opt2_net.v
+```
+<img width="1440" alt="Screenshot 2024-10-22 at 12 06 19 AM" src="https://github.com/user-attachments/assets/8ab9cb63-b311-4c39-bbfc-625fbe966c34">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 06 40 AM" src="https://github.com/user-attachments/assets/ce6239e6-b970-43fd-b765-68c7f431e8d8">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 07 12 AM" src="https://github.com/user-attachments/assets/88f6db2e-e307-417a-865e-73ca006fa7a5">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 07 14 AM" src="https://github.com/user-attachments/assets/83a96156-460d-4552-be12-362e3788c604">
+
+
+
+GTKWave Output:
+
+```
+iverilog counter_opt2.v tb_counter_opt.v
+./a.out
+gtkwave tb_counter_opt.vcd
+```
+
+<img width="1440" alt="Screenshot 2024-10-22 at 12 09 41 AM" src="https://github.com/user-attachments/assets/a7fc338b-a20e-401f-ab17-a4b33f196a25">
+
+<img width="1440" alt="Screenshot 2024-10-22 at 12 09 37 AM" src="https://github.com/user-attachments/assets/1529153a-cbb6-422f-bfe6-8f1b119f54b0">
+<img width="1440" alt="Screenshot 2024-10-22 at 12 09 22 AM" src="https://github.com/user-attachments/assets/43b6c197-df51-4a2f-9b48-d4274b85cc4d">
 
 
 
 
 
 </details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <details>
 <summary><strong>Day 4:</strong> GLS, blocking vs non-blocking and Synthesis-Simulation mismatch.</summary>
+
+### GLS
 
 Gate Level Simulation (GLS) is a crucial step in the verification process of digital circuits. It involves simulating the synthesized netlist, which is a lower-level representation of the design, using a testbench to verify its logical correctness and timing behavior. By comparing the simulated outputs to the expected outputs, GLS ensures that the synthesis process has not introduced any errors and that the design meets its performance requirements.
 
