@@ -2763,7 +2763,7 @@ write_verilog -noattr good_mux_netlist.v
 
 
 <details>
-<summary><strong>Day 1:</strong> Timing libs, hierarchical vs flat synthesis and efficient flop coding styles.</summary>
+<summary><strong>Day 2:</strong> Timing libs, hierarchical vs flat synthesis and efficient flop coding styles.</summary>
 
 
 ### 2.1. Introduction to timing labs
@@ -2780,6 +2780,7 @@ gedit ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 
 #### Contents
 For a design to work, there are three important parameters that determines how the Silicon works: Process (Variations due to Fabrications), Voltage (Changes in the behavior of the circuit) and Temperature (Sensitivity of semiconductors). Libraries are characterized to model these variations. 
+
 <img width="832" alt="Screenshot 2024-10-21 at 9 42 37 PM" src="https://github.com/user-attachments/assets/e6c1ca5c-0122-499f-9ae9-98de0700defc">
 
 
@@ -2933,19 +2934,243 @@ The following statistics are displayed:
 
 
 
+## D Flip-Flop Design and Simulation Using Icarus Verilog, GTKWave, and Yosys:
+
+### Various Flop coding styles and optimization
+In a digital design, when an input signal changes state, the output changes after a propogation delay. All logic gates add some delay to singals. These delays cause expected and unwanted transitions in the output, called as _Glitches_ where the output value is momentarily different from the expected value. An increased delay in one path can cause glitch when those signals are combined at the output gate. In short, more combinational circuits lead to more glitchy outputs that will not settle down with the output value. 
+
+#### Flip flop overview
+A D flip-flop is a sequential element that follows the input pin d at the clock's given edge. D flip-flop is a fundamental component in digital logic circuits.
+There are two types of D Flip-Flops being implemented: Rising-Edge D Flip Flop and Falling-Edge D Flip Flop.
+
+
+Every flop element needs an initial state, else the combinational circuit will evaluate to a garbage value. In order to achieve this, there are control pins in the flop namely: Set and Reset which can either be Synchronous or Asynchronous. 
+
+
+
+#### FLIP FLOP SIMULATION
+
+**Asynchronous Reset Flip-flop:**
+
+Verilog Code:
+
+```
+module dff_asyncres ( input clk ,  input async_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+Run the below code to view the simulation:
+
+```
+iverilog dff_asyncres.v tb_dff_asyncres.v
+./a.out
+gtkwave tb_dff_asyncres.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 18 02 PM" src="https://github.com/user-attachments/assets/3f3295e2-162c-4a22-86b1-2ae2b5db9256">
+
+Waveform:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 20 57 PM" src="https://github.com/user-attachments/assets/0c034c1b-1926-41ea-b7b8-1053df6b5325">
+
+
+
+Run the below code to view the netlist:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_asyncres.v
+synth -top dff_asyncres
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 25 33 PM" src="https://github.com/user-attachments/assets/b4f60ca0-87f0-449b-9692-efe944f84407">
+
+Netlist:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 25 55 PM" src="https://github.com/user-attachments/assets/21aa4958-71e1-47b7-8653-cfdfb755adcc">
+
+
+
+**Synchronous Reset Flip-flop:**
+
+Verilog Code:
+
+```
+module dff_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk )
+begin
+	if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+Run the below code to view the simulation:
+
+```
+iverilog dff_syncres.v tb_dff_syncres.v
+./a.out
+gtkwave tb_dff_syncres.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 27 59 PM" src="https://github.com/user-attachments/assets/094c9ec5-4179-4da5-99b4-03cbdcdc2bb0">
+
+Waveform:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 27 50 PM" src="https://github.com/user-attachments/assets/d2239400-7f5c-45d5-86b6-0b5ad191c47e">
+
+
+
+Run the below code to view the netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_syncres.v
+synth -top dff_syncres
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 28 45 PM" src="https://github.com/user-attachments/assets/fc5bd7f2-4ad0-48c1-9eee-2c40aaa5e5ac">
+
+Netlist:
+
+<img width="1440" alt="Screenshot 2024-10-21 at 10 29 06 PM" src="https://github.com/user-attachments/assets/0c47326a-ff33-42f6-b990-7cb5ff105997">
+
+
+**Asynchronous Set Flip-flop:**
+
+Verilog Code:
+
+```
+module dff_async_set ( input clk ,  input async_set , input d , output reg q );
+always @ (posedge clk , posedge async_set)
+begin
+	if(async_set)
+		q <= 1'b1;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+Run the below code to view the simulation:
+```
+iverilog dff_async_set.v tb_dff_async_set.v
+./a.out
+gtkwave tb_dff_async_set.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 31 05 PM" src="https://github.com/user-attachments/assets/d78cb1c1-221d-4ff2-b8a1-048a36204740">
+
+Waveform:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 30 53 PM" src="https://github.com/user-attachments/assets/46865392-35a6-4eac-9900-8969cf99385f">
+
+
+
+Run the below code to view the netlist:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_async_set.v
+synth -top dff_async_set
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 10 31 51 PM" src="https://github.com/user-attachments/assets/50aa460a-0a62-4ab9-93fa-ca2b3c7d34c5">
+
+Netlist:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 32 11 PM" src="https://github.com/user-attachments/assets/25a46a1d-abcb-43c0-af64-6934f05ad26e">
+
+
+
+#### Optimizations
+
+```
+modules used are opened using the command
+vim mult_*.v -o
+yosys 
+read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_2.v
+synth -top mul2
+abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show 
+write_verilog -noattr mult_2.v
+!gedit mult_2.v
+```
+## Example 1: mult_2.v 
+We can see the multiplication of a number by 2 doesnt really need any extra hardware we just need to append the LSB's with zeroes and the remaining bits are the input bits of same, It can be realised by grouding the LSB's and wiring the input properly to the output.
+
+**Expected Logic**
+```
+module mul2 (input [2:0] a, output [3:0] y);
+assign y = a * 2;
+endmodule
+```
+
+
+**Statistics:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 37 17 PM" src="https://github.com/user-attachments/assets/7110cd0f-694e-4b92-bc63-5f255d5f6960">
+
+
+
+ ##### No hardware requirements - No # of memories, memory bites, processes and cells. Number of cells inferred is 0.
+
+
+ **Netlist:**
+ <img width="1440" alt="Screenshot 2024-10-21 at 10 37 39 PM" src="https://github.com/user-attachments/assets/8cb15905-93a1-4c90-aab6-20ff0adc3e93">
+**NetList File:**
+ <img width="1440" alt="Screenshot 2024-10-21 at 10 38 10 PM" src="https://github.com/user-attachments/assets/c5873d5b-3403-436b-b033-c8175f8583e2">
+
+## Example 2: mult_8.v
+
+Consider the verilog code 'mult_8.v' :
+
+```
+module mult8 (input [2:0] a , output [5:0] y);
+	assign y = a * 9;
+endmodule
+```
+
+In this design the 3-bit input number "a" is multiplied by 9 i.e (a*9) which can be re-written as (a*8) + a . The term (a*8) is nothing but a left shifting the number a by three bits. Consider that a = a2 a1 a0. (a*8) results in a2 a1 a0 0 0 0. (a*9)=(a*8)+a = a2 a1 a0 a2 a1 a0 = aa(in 6 bit format). Hence in this case no hardware realization is required. The synthesized netlist of this design is shown below:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_8.v
+synth -top mult8
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr mult_8_net.v
+```
+
+**Statistics:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 40 56 PM" src="https://github.com/user-attachments/assets/4fa58ebd-c677-4c51-bac3-8b03ef9b28cb">
+
+
+
+**Netlist:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 41 14 PM" src="https://github.com/user-attachments/assets/172dc09b-d00e-49b2-a86c-5f85f7a74ae3">
 
 
 
 
+**Netlist code:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 41 35 PM" src="https://github.com/user-attachments/assets/1f10058d-50b2-4363-a230-227c65f9d30b">
+</details>
 
 
-
-
-
-
-
-
-
+<details>
+<summary><strong>Day 3:</strong> Combinational and sequential optimizations.</summary>
 
 
 
@@ -2988,44 +3213,11 @@ The following statistics are displayed:
 
 
 
-
-
-
-
-
-
-
-
-
 <details>
-<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+<summary><strong>Day 4:</strong> Introduction to Verilog RTL design and Synthesis.</summary>
 
 ### 1.1. Introduction to open source simulator iverilog
 
-In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
-
-**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
-
-**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
-
-<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
-
-
-
-
-</details>
-<details>
-<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
-
-### 1.1. Introduction to open source simulator iverilog
-
-In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
-
-**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
-
-**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
-
-<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
 
 
 
