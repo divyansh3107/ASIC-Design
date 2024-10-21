@@ -2621,6 +2621,138 @@ In digital circuit design, **register-transfer level** (RTL) is an abstraction t
 
 <img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
 
+#### SIMULATION FLOW
+
+<img width="809" alt="Screenshot 2024-10-21 at 9 03 57 PM" src="https://github.com/user-attachments/assets/0e9e65c0-9884-4f32-9253-6670dba8c4ba">
+
+
+
+#### LAB-1
+Steps:
+```
+mkdir VLSI 
+cd VLSI
+git clone https://github.com/kunalg123/vsdflow.git
+cd vsdflow
+git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+cd sky130RTLDesignAndSynthesisWorkshop/verilog_files
+ls
+```
+Verilog files which will be used in this lab
+<img width="1440" alt="Screenshot 2024-10-21 at 9 08 17 PM" src="https://github.com/user-attachments/assets/7076b1cb-8ac5-4d07-b48f-33867d569c72">
+
+```
+cd sky130RTLDesignAndSynthesisWorkshop
+ls -R
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 09 57 PM" src="https://github.com/user-attachments/assets/25ea9cc4-c79c-4b45-a4d3-9e11e124773f">
+
+#### LAB-2
+
+To compile the verilog and testbench file use the following commands which will generate an executable file and will dump the waveform to view it using the gtkwave.
+In this lab we will implement a 2:1 multiplexer.
+
+Steps:
+```
+iverilog good_mux.v tb_good_mux.v
+./a.out
+gtkwave tb_good_mux.vcd
+```
+
+
+<img width="1440" alt="Screenshot 2024-10-21 at 9 14 57 PM" src="https://github.com/user-attachments/assets/3471a86a-ad5c-43c8-b4c5-ca3ab2fa1ee7">
+<img width="1440" alt="Screenshot 2024-10-21 at 9 15 54 PM" src="https://github.com/user-attachments/assets/4ace2376-aa4b-4e39-b06c-a8420971d33b">
+
+
+To view the files
+```
+gedit good_mux.v
+gedit tb_good_mux.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 19 06 PM" src="https://github.com/user-attachments/assets/07f06d52-991b-4c51-9e84-e8e278854192">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 9 17 20 PM" src="https://github.com/user-attachments/assets/f496e505-c73b-4492-ac2f-290ad9ba670a">
+<img width="1440" alt="Screenshot 2024-10-21 at 9 17 49 PM" src="https://github.com/user-attachments/assets/10e0e63f-263f-411c-b236-55f24bab8988">
+
+
+
+
+
+
+
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+
+### 1.1. Introduction to open source simulator iverilog
+
+In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
+
+**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
+
+**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
+
+<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
+
+
+
+
+</details>
+<details>
+<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+
+### 1.1. Introduction to open source simulator iverilog
+
+In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
+
+**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
+
+**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
+
+<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
+
+
+
+
+</details>
+<details>
+<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+
+### 1.1. Introduction to open source simulator iverilog
+
+In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
+
+**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
+
+**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
+
+<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
+
 
 
 
