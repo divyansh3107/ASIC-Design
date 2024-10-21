@@ -2605,11 +2605,11 @@ NOTE: This my system of college os SARL-LAB (I have created a folder to show my 
 
 
 <details>
-<summary><strong>Laboratory 9:</strong>RTL design using Verilog with SKY130 Technology.</summary>
+<summary><strong>Laboratory 9:</strong> RTL design using Verilog with SKY130 Technology.</summary>
 
 ---
 <details>
-<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+<summary><strong>Day 1:</strong> Introduction to Verilog RTL design and Synthesis.</summary>
 
 ### 1.1. Introduction to open source simulator iverilog
 
@@ -2675,54 +2675,328 @@ gedit tb_good_mux.v
 <img width="1440" alt="Screenshot 2024-10-21 at 9 17 49 PM" src="https://github.com/user-attachments/assets/10e0e63f-263f-411c-b236-55f24bab8988">
 
 
+#### LAB-3
+**Introduction to Yosys & Logic Synthesis**
+
+Synthesizer is the tool used for converting the RTL to netlist. Yosys is one such open source synthesizer. Yosys optimizes the design, mapping it to specific target technology libraries or FPGA architectures, and generates an optimized netlist that can be further analyzed and prepared for physical layout and fabrication.
+<img width="843" alt="Screenshot 2024-10-21 at 9 23 58 PM" src="https://github.com/user-attachments/assets/7280efc4-db86-45d8-ad15-8fb42160c057">
 
 
+**Verifiying the Synthesis**
+The same testbench that is used for the simulation can be used for the synthesized netlist as well.
+
+<img width="830" alt="Screenshot 2024-10-21 at 9 24 04 PM" src="https://github.com/user-attachments/assets/0c0bdc6b-db3b-4061-b1bd-c45d9e19f3dc">
+
+Synthesis has three steps: RTL to Gate level translation, The design is then converted into gates and the connections are made between the gates and the output is given out as a file called netlist.
+<img width="564" alt="Screenshot 2024-10-21 at 9 26 49 PM" src="https://github.com/user-attachments/assets/1089ca5d-e80e-432b-8c0d-c52b794466fd">
 
 
+RTL Design - behavioral representation in HDL form for the required specification.
+
+ **Synthesis** - RTL to Gate level translation.
+ The design is converted int gates and connections are made. This given outas a file called **netlist**.
+
+>_.lib file is a collection of logical modules which includes all basic logic gates. It may also contain different flavors of the same gate (2 input AND, 3 input AND – slow, medium and fast version)._
+<img width="859" alt="Screenshot 2024-10-21 at 9 27 00 PM" src="https://github.com/user-attachments/assets/cb82d057-9ca0-41b2-8e6e-d3ffd1398f7c">
 
 
+#### Faster cells and Slower Cells
 
+A cell delay in the digital logic circuit depends on the load of the circuit which here is Capacitance.
+
+Faster the charging / discharging of the capacitance --> Lesser is the Cell Delay
+
+Inorder to charge/discharge the capacitance faster, we use wider transistors that can source more current. This will help us reduce the cell delay but at the same time, wider transistors consumer more power and area. Similarly, using narrower transistors help in reduced area and power but the circuit will have a higher cell delay. Hence, we have to compromise on area and power if we are to design a circuit with low cell delay.
+
+#### Constraints
+
+A Constraint is a guidance file given to a synthesizer inorder to enable an optimum implementation of the logic circuit by selecting the appropriate flavour of cells (fast or slow).
+
+
+**Yosys flow**
+1. start yosys.
+          
+```
+yosys
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 31 02 PM" src="https://github.com/user-attachments/assets/c82c195e-3951-4b7d-94b5-fe052630fee6">
+
+2. load the sky130 standard library.
+```
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 31 17 PM" src="https://github.com/user-attachments/assets/912265e2-c5f9-4df0-a131-ea9e1c3a2c57">
+
+3. Read the design files
+```
+read_verilog good_mux.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 31 57 PM" src="https://github.com/user-attachments/assets/e32133d8-8815-438f-8f22-ab429e12e2fa">
+
+4. Synthesize the top level module
+```
+synth -top good_mux
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 32 24 PM" src="https://github.com/user-attachments/assets/af44ed1a-fda9-4e45-afb4-78a92bc3142e">
+
+        
+5. Map to the standard library
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 32 41 PM" src="https://github.com/user-attachments/assets/1551bdb6-1135-4dd4-b434-7416d10673d1">
+
+
+6. Two view the result as a graphich use the show command.
+```
+show
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 32 48 PM" src="https://github.com/user-attachments/assets/4275b1e9-875d-44c9-8c23-b1efd0436154">
+
+7. To write the result netlist to a file use the write_veriog command. This will output the netlist to a file in the current directory.
+```
+write_verilog -noattr good_mux_netlist.v
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 34 22 PM" src="https://github.com/user-attachments/assets/1f44c563-211c-4b32-a031-0bb5781b1d47">
 
 </details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <details>
-<summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
+<summary><strong>Day 1:</strong> Timing libs, hierarchical vs flat synthesis and efficient flop coding styles.</summary>
 
-### 1.1. Introduction to open source simulator iverilog
 
-In digital circuit design, **register-transfer level** (RTL) is an abstraction that models a synchronous digital circuit by describing how data flows between hardware registers and how logic operations are applied to these signals. This RTL abstraction is used in HDL (Hardware Description Language) to create high-level models of a circuit, which can then be used to derive lower-level representations and, eventually, the actual hardware layout.
+### 2.1. Introduction to timing labs
+navigate to the verilog_files directory then type these below command
+Command to open the libary file
+```
+gedit ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+<img width="1440" alt="Screenshot 2024-10-21 at 9 41 13 PM" src="https://github.com/user-attachments/assets/68467fce-e9ee-49d1-ac6c-1b67ced239b0">
 
-**Simulator**: A tool used to verify the design. In this workshop, we utilize the iverilog tool. Simulation involves generating models that replicate the behavior of the intended device (simulation models) and creating test models to validate the device (test benches). RTL Design: Consists of one or more Verilog files that implement the required design specifications and functionality for the circuit.
+#### Library file
 
-**Test Bench**: The configuration used to provide stimulus (test vectors) to the design in order to verify its functionality.
+<img width="1440" alt="Screenshot 2024-10-21 at 9 40 21 PM" src="https://github.com/user-attachments/assets/fc5539a2-00b9-4bed-bb54-44fc7be09215">
 
-<img width="819" alt="Screenshot 2024-10-21 at 8 58 40 PM" src="https://github.com/user-attachments/assets/8bde6f58-15b1-42b2-afba-d07dcfb4a91e">
+#### Contents
+For a design to work, there are three important parameters that determines how the Silicon works: Process (Variations due to Fabrications), Voltage (Changes in the behavior of the circuit) and Temperature (Sensitivity of semiconductors). Libraries are characterized to model these variations. 
+<img width="832" alt="Screenshot 2024-10-21 at 9 42 37 PM" src="https://github.com/user-attachments/assets/e6c1ca5c-0122-499f-9ae9-98de0700defc">
+
+
+
+### The .lib(liberty) File contents
+The timing data of standard cells is provided in the liberty format. Every .lib file will provide timing, power, noise, area information for a single corner ie process,voltage, temperature etc.
+1. Library\
+general information common to all cells in the library.
+2. Cell\
+specific information about each standard cell.
+3. Pin\
+Timing, power, capacitance, leakage functionality etc characteristics for each pin in each cell.
+4. technology("cmos"): Specifies the technology as CMOS.
+5. delay_model : "table_lookup": Defines the delay model.
+6. bus_naming_style : "%s[%d]": Defines the naming convention for buses.
+7. time_unit : "1ns": Sets the unit of time.
+8. voltage_unit : "1V": Sets the unit of voltage.
+9. leakage_power_unit : "1nW": Defines the unit for leakage power.
+10. current_unit : "1mA": Sets the unit of current.
+11. pulling_resistance_unit : "1kohm": Specifies the unit for pulling resistance.
+12. capacitive_load_unit(1.0000000000, "pf"): Defines the unit for capacitive load.
+
+We can also find different versions of the same cell. For example, consider the AND gate
+
+<img width="1440" alt="Screenshot 2024-10-21 at 9 44 15 PM" src="https://github.com/user-attachments/assets/3c4e61fe-cf3a-40ef-a2bb-be7feb196969">
+<img width="1440" alt="Screenshot 2024-10-21 at 9 45 20 PM" src="https://github.com/user-attachments/assets/25964e87-7169-4746-a363-e419cc253910">
+<img width="1440" alt="Screenshot 2024-10-21 at 9 44 28 PM" src="https://github.com/user-attachments/assets/794dd81a-8ada-42d7-904c-4eba024d8926">
+
+We can observe that:
+
+- and2_0 -- taking the least area, more delay and low power.
+- and2_1 -- taking more area, less delay and high power.
+- and2_2 -- taking the largest area, larger delay and highest power.
+
+
+### Hierarchial synthesis vs Flat synthesis 
+#### Hierarchial synthesis 
+
+Hierarchical synthesis involves synthesizing a complex design by breaking it down into various sub-modules, where each module is synthesized separately to generate gate-level netlists and then integrated. Hierarchical synthesis allows for better organization, reuse of modules, and incremental changes to the design without affecting the entire system. Flat synthesis, on the other hand, treats the entire design as a single, monolithic unit during the synthesis process and regardless of any hierarchical relations, it is synthesized into a single netlist. Flat synthesis can be useful for optimizing certain designs but it becomes challenging to maintain, analyze, and modify the design due to its lack of structural modularity.
+
+Consider the verilog file `multiple_modules.v` which is given in the verilog_files directory
+
+```
+module sub_module2 (input a, input b, output y);
+    assign y = a | b;
+endmodule
+
+module sub_module1 (input a, input b, output y);
+    assign y = a&b;
+endmodule
+
+
+module multiple_modules (input a, input b, input c , output y);
+    wire net1;
+    sub_module1 u1(.a(a),.b(b),.y(net1));  //net1 = a&b
+    sub_module2 u2(.a(net1),.b(c),.y(y));  //y = net1|c ,ie y = a&b + c;
+endmodule
+```
+
+To perform **hierarchical synthesis** on the `multiple_modules.v` file type the following commands:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_modules.v
+synth -top multiple_modules
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show multiple_modules
+write_verilog -noattr multiple_modules_hier.v
+!gedit multiple_modules_hier.v
+```
+
+The following statistics are displayed:
+
+
+<img width="1440" alt="Screenshot 2024-10-21 at 9 54 38 PM" src="https://github.com/user-attachments/assets/d217778d-ee53-421f-9eb4-16c8c31742da">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 9 54 44 PM" src="https://github.com/user-attachments/assets/aa25e694-eacc-48ff-a29f-e8a9fe67c498">
+<img width="1440" alt="Screenshot 2024-10-21 at 9 55 04 PM" src="https://github.com/user-attachments/assets/a5d8fece-e803-44bb-bb24-ecf83960afbf">
+
+
+**Netlist:**
+<img width="1440" alt="Screenshot 2024-10-21 at 9 55 18 PM" src="https://github.com/user-attachments/assets/cf8d1cca-324c-4bef-bc87-3ff2be597027">
+
+**Hierarchical netlist code:**
+<img width="1440" alt="Screenshot 2024-10-21 at 9 58 51 PM" src="https://github.com/user-attachments/assets/1255d548-0505-4d19-96b0-11eddf0b9d62">
+
+
+
+
+
+#### Flat synthesis 
+
+
+To perform **flat synthesis** on the `multiple_modules.v` file type the following commands:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_modules.v
+synth -top multiple_modules
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+flatten
+show
+write_verilog -noattr multiple_modules_flat.v
+```
+
+The following statistics are displayed:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 03 13 PM" src="https://github.com/user-attachments/assets/d6ef6538-d030-42f4-b8b7-93534884f6a9">
+<img width="1440" alt="Screenshot 2024-10-21 at 10 03 21 PM" src="https://github.com/user-attachments/assets/099e7916-a9e7-4e24-97c5-348b61a88380">
+<img width="1440" alt="Screenshot 2024-10-21 at 10 03 41 PM" src="https://github.com/user-attachments/assets/95c912a3-7b08-4bcd-a8de-9dcf3051d4ca">
+
+
+**Netlist:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 03 48 PM" src="https://github.com/user-attachments/assets/fb8e1ef9-6904-4b83-85a0-e787029394b8">
+
+**Flat synthesis netlist code:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 04 49 PM" src="https://github.com/user-attachments/assets/2f835a08-fe0e-4c6e-a8fd-071607ab1114">
+
+
+#### Sub Module synthesis 
+
+
+To perform **sub module synthesis**. type the below commands:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+read_verilog multiple_modules.v 
+synth -top sub_module
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+show
+write_verilog -noattr multiple_modules_sub1.v
+!gedit multiple_modules_sub1.v
+```
+
+The following statistics are displayed:
+<img width="1440" alt="Screenshot 2024-10-21 at 10 07 26 PM" src="https://github.com/user-attachments/assets/546cfb60-23dc-4669-bbc4-39c9b7871435">
+
+<img width="1440" alt="Screenshot 2024-10-21 at 10 08 12 PM" src="https://github.com/user-attachments/assets/b5f3c736-3509-4e72-8105-62e2f8d9aa89">
+
+
+**Netlist:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 08 22 PM" src="https://github.com/user-attachments/assets/54520478-181a-4e13-9e1a-07cff394a2a5">
+
+
+
+**Netlist code:**
+<img width="1440" alt="Screenshot 2024-10-21 at 10 10 08 PM" src="https://github.com/user-attachments/assets/5b29e34c-de93-42ae-b7b0-5518cc60089f">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <details>
 <summary><strong>Day 1:</strong>Introduction to Verilog RTL design and Synthesis.</summary>
 
