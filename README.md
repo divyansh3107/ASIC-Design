@@ -4101,7 +4101,8 @@ synth -top rvmyth
 abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 show
 ```
-<img width="824" alt="Screenshot 2024-10-24 at 1 41 00 AM" src="https://github.com/user-attachments/assets/1bd2ad74-d709-40df-8a95-e85320299e1a">
+
+![WhatsApp Image 2024-10-24 at 03 02 58](https://github.com/user-attachments/assets/e3450598-92ec-4d7e-99b8-d2a11f385654)
 
 
 Comparison by taking example of 7056:
