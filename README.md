@@ -4064,6 +4064,7 @@ read_verilog clk_gate.v
 read_verilog rvmyth.v
 synth -top rvmyth
 abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
 write_verilog -noattr rvmyth_net.v
 !gedit rvmyth_net.v
 exit
@@ -4082,6 +4083,21 @@ exit
 **Netlist:**
 <img width="1440" alt="Screenshot 2024-10-23 at 11 58 59 PM" src="https://github.com/user-attachments/assets/4f36c1b4-b195-4b60-b22e-1521e73c06c4">
 <img width="1440" alt="Screenshot 2024-10-23 at 11 59 07 PM" src="https://github.com/user-attachments/assets/578aca65-6391-4f84-bca5-068b3cdfe747">
+
+
+
+**Netlist of VSDBabySOC**
+Command
+```
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog vsdbabysoc.v
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+<img width="824" alt="Screenshot 2024-10-24 at 1 41 00 AM" src="https://github.com/user-attachments/assets/1bd2ad74-d709-40df-8a95-e85320299e1a">
 
 
 
