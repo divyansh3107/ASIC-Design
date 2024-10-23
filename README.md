@@ -4070,19 +4070,13 @@ write_verilog -noattr rvmyth_net.v
 exit
 
 ```
+<img width="1440" alt="Screenshot 2024-10-24 at 4 45 13 AM" src="https://github.com/user-attachments/assets/541742c8-0e61-46e4-8c2a-7018306b43cf">
 
-
-
-**Realisation:**
-<img width="1440" alt="Screenshot 2024-10-23 at 11 57 41 PM" src="https://github.com/user-attachments/assets/db8d1e18-227f-4706-851d-724b7eb96ae7">
-<img width="1440" alt="Screenshot 2024-10-23 at 11 57 58 PM" src="https://github.com/user-attachments/assets/d5af76f0-1864-40d6-b4bf-f915b1a563a8">
-<img width="1440" alt="Screenshot 2024-10-23 at 11 58 05 PM" src="https://github.com/user-attachments/assets/121d6834-816a-4fde-aeea-729cc48d73bf">
-<img width="1440" alt="Screenshot 2024-10-23 at 11 58 12 PM" src="https://github.com/user-attachments/assets/866f5d2c-8618-402b-b2fd-d58f74e46fc3">
 
 
 **Netlist:**
-<img width="1440" alt="Screenshot 2024-10-23 at 11 58 59 PM" src="https://github.com/user-attachments/assets/4f36c1b4-b195-4b60-b22e-1521e73c06c4">
-<img width="1440" alt="Screenshot 2024-10-23 at 11 59 07 PM" src="https://github.com/user-attachments/assets/578aca65-6391-4f84-bca5-068b3cdfe747">
+<img width="1440" alt="Screenshot 2024-10-24 at 4 53 40 AM" src="https://github.com/user-attachments/assets/e8af9e04-65ee-4abf-9c3a-beb3e0ec5010">
+
 
 **Simulation:**
 
@@ -4107,10 +4101,13 @@ read_verilog clk_gate.v
 read_verilog rvmyth.v
 synth -top rvmyth
 abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+select vsdbabysoc
 show
 ```
+<img width="1440" alt="Screenshot 2024-10-24 at 4 48 29 AM" src="https://github.com/user-attachments/assets/11ca1002-06c9-4c6a-92cd-a8f372444671">
+<img width="1440" alt="Screenshot 2024-10-24 at 4 48 31 AM" src="https://github.com/user-attachments/assets/731420e8-5a9f-41ba-b3a2-c19b06256076">
+<img width="1440" alt="Screenshot 2024-10-24 at 4 49 35 AM" src="https://github.com/user-attachments/assets/f7634fd6-505e-4f3a-b3f3-2cfed488b309">
 
-![WhatsApp Image 2024-10-24 at 03 02 58](https://github.com/user-attachments/assets/e3450598-92ec-4d7e-99b8-d2a11f385654)
 
 
 Comparison by taking example of 7056:
@@ -4119,7 +4116,7 @@ Comparison by taking example of 7056:
 
 
 
-##### Pre-Synthesis
+##### Pre-Synthesis (Functional Simulation)
 
 **Steps:**
 
