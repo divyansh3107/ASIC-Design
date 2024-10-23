@@ -4041,6 +4041,17 @@ There are two ways:
 make post_synth_sim
 gtkwave output/post_synth_sim/post_synth_sim.vcd
 ```
+<img width="1440" alt="Screenshot 2024-10-23 at 11 23 58 PM" src="https://github.com/user-attachments/assets/4559e770-8561-46ed-bf63-cf30f530f906">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 24 01 PM" src="https://github.com/user-attachments/assets/bee553d0-76e1-4c95-8f34-26202f8e90e3">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 27 56 PM" src="https://github.com/user-attachments/assets/36884ca5-08ae-4483-ba7c-ba99335c9886">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 43 27 PM" src="https://github.com/user-attachments/assets/c4acaf25-5cc4-4029-b163-8499d97a548e">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 43 36 PM" src="https://github.com/user-attachments/assets/ea88c2e6-3337-44b9-807a-d2419c095a49">
+
+Simulations:
+
+<img width="1440" alt="Screenshot 2024-10-23 at 11 50 00 PM" src="https://github.com/user-attachments/assets/d0ab80a3-fcc7-4180-9ddd-4e11f30e00ef">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 43 27 PM" src="https://github.com/user-attachments/assets/3da2bb1b-3a1c-42ae-be8d-be9ad0d41dcf">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 43 36 PM" src="https://github.com/user-attachments/assets/9228f1e6-90ac-4195-93e0-4f070ab181f1">
 
 
 #### Method-2
@@ -4062,13 +4073,32 @@ exit
 
 
 **Realisation:**
+<img width="1440" alt="Screenshot 2024-10-23 at 11 57 41 PM" src="https://github.com/user-attachments/assets/db8d1e18-227f-4706-851d-724b7eb96ae7">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 57 58 PM" src="https://github.com/user-attachments/assets/d5af76f0-1864-40d6-b4bf-f915b1a563a8">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 58 05 PM" src="https://github.com/user-attachments/assets/121d6834-816a-4fde-aeea-729cc48d73bf">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 58 12 PM" src="https://github.com/user-attachments/assets/866f5d2c-8618-402b-b2fd-d58f74e46fc3">
 
 
 **Netlist:**
+<img width="1440" alt="Screenshot 2024-10-23 at 11 58 59 PM" src="https://github.com/user-attachments/assets/4f36c1b4-b195-4b60-b22e-1521e73c06c4">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 59 07 PM" src="https://github.com/user-attachments/assets/578aca65-6391-4f84-bca5-068b3cdfe747">
 
 
 
 ##### Pre-Synthesis
+
+**Steps:**
+
+```
+cd ~
+cd VSDBabySoC
+iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+./pre_synth_sim.out
+gtkwave pre_synth_sim.vcd
+```
+<img width="1440" alt="Screenshot 2024-10-23 at 11 48 26 PM" src="https://github.com/user-attachments/assets/d5fd51de-3b95-434b-a6d2-a42c8c778728">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 45 26 PM" src="https://github.com/user-attachments/assets/015f6f08-07a2-4c1b-ac88-cf85281483dc">
+<img width="1440" alt="Screenshot 2024-10-23 at 11 45 34 PM" src="https://github.com/user-attachments/assets/2f4d3638-7969-4ce4-8450-c74b685e4b32">
 
 
 
