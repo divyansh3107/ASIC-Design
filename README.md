@@ -4017,6 +4017,9 @@ In this case there is a synthesis and simulation mismatch. While performing synt
 
 ### To Synthesize RISC-V and compare output with functional simulations
 
+
+##### Post-Synthesis
+
 Steps:
 1. Copy the src folder from your VSDBabySoC folder to your VLSI folder.
 2.  Go the required Directory:
@@ -4026,6 +4029,46 @@ cd /home/sarl-lab/Desktop/Divyansh/VLSI/vsdflow/sky130RTLDesignAndSynthesisWorks
 ```
 <img width="1440" alt="Screenshot 2024-10-23 at 8 53 07 PM" src="https://github.com/user-attachments/assets/1fd8e739-38ea-4f5b-868b-00448e11e2b8">
 <img width="1440" alt="Screenshot 2024-10-23 at 8 55 23 PM" src="https://github.com/user-attachments/assets/8b557f20-a92f-4274-94ac-513470f25c9d">
+
+
+There are two ways:
+
+#### Method-1
+1. Now run these command in the VSDBabySOC folder to get output
+   
+
+```
+make post_synth_sim
+gtkwave output/post_synth_sim/post_synth_sim.vcd
+```
+
+
+#### Method-2
+1. Using Yosys
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+write_verilog -noattr rvmyth_net.v
+!gedit rvmyth_net.v
+exit
+
+```
+
+
+
+**Realisation:**
+
+
+**Netlist:**
+
+
+
+##### Pre-Synthesis
 
 
 
