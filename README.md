@@ -4012,7 +4012,13 @@ In this case there is a synthesis and simulation mismatch. While performing synt
 </details>
 </details>
 
+<details>
+<summary><strong>Lab 10:</strong> RISC-V </summary>
 
+
+
+
+</details>
 
 
 
