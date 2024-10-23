@@ -4013,7 +4013,19 @@ In this case there is a synthesis and simulation mismatch. While performing synt
 </details>
 
 <details>
-<summary><strong>Lab 10:</strong> RISC-V </summary>
+<summary><strong>Lab 10:</strong> Synthesize RISC-V and compare output with functional simulations. </summary>
+
+### To Synthesize RISC-V and compare output with functional simulations
+
+Steps:
+1. Copy the src folder from your VSDBabySoC folder to your VLSI folder.
+2.  Go the required Directory:
+
+```
+cd /home/sarl-lab/Desktop/Divyansh/VLSI/vsdflow/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+<img width="1440" alt="Screenshot 2024-10-23 at 8 53 07 PM" src="https://github.com/user-attachments/assets/1fd8e739-38ea-4f5b-868b-00448e11e2b8">
+<img width="1440" alt="Screenshot 2024-10-23 at 8 55 23 PM" src="https://github.com/user-attachments/assets/8b557f20-a92f-4274-94ac-513470f25c9d">
 
 
 
