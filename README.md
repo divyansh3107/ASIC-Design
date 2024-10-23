@@ -4084,6 +4084,14 @@ exit
 <img width="1440" alt="Screenshot 2024-10-23 at 11 58 59 PM" src="https://github.com/user-attachments/assets/4f36c1b4-b195-4b60-b22e-1521e73c06c4">
 <img width="1440" alt="Screenshot 2024-10-23 at 11 59 07 PM" src="https://github.com/user-attachments/assets/578aca65-6391-4f84-bca5-068b3cdfe747">
 
+**Simulation:**
+
+```
+iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v
+./a.out
+gtkwave dump.vcd
+```
+![WhatsApp Image 2024-10-24 at 04 39 47](https://github.com/user-attachments/assets/fbee526a-3884-4ece-87fb-1f660e70e62b)
 
 
 
