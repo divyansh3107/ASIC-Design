@@ -4103,6 +4103,11 @@ show
 <img width="824" alt="Screenshot 2024-10-24 at 1 41 00 AM" src="https://github.com/user-attachments/assets/1bd2ad74-d709-40df-8a95-e85320299e1a">
 
 
+Comparison by taking example of 7056:
+<img width="1440" alt="Screenshot 2024-10-24 at 2 20 20 AM" src="https://github.com/user-attachments/assets/a852f568-4ad0-48e6-bd0d-9c9a6944ef85">
+<img width="1378" alt="Screenshot 2024-10-24 at 2 21 12 AM" src="https://github.com/user-attachments/assets/7223940c-52af-461e-a21e-f35d9b234ac9">
+
+
 
 ##### Pre-Synthesis
 
