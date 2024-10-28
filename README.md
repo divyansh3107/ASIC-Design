@@ -4135,7 +4135,60 @@ gtkwave pre_synth_sim.vcd
 
 
 </details>
+<details>
+<summary><strong>Lab 11:</strong> Post Synthesis Static Timing Analysis using OpenSTA.</summary>
+The contents of VSDBabySoc/src/sdc/vsdbabysoc_synthesis.sdc:
+
+```
+set PERIOD 11
+
+set_units -time ns
+create_clock [get_pins {pll/CLK}] -name clk -period $PERIOD
+set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_transition [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_uncertainty -hold [expr $PERIOD * 0.08] [get_clocks clk]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_CP]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_VCO]
+set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
+```
+<img width="1440" alt="Screenshot 2024-10-28 at 10 23 14 PM" src="https://github.com/user-attachments/assets/2965241f-32f9-45e2-9cfb-629b10731092">
+<img width="1440" alt="Screenshot 2024-10-28 at 10 23 38 PM" src="https://github.com/user-attachments/assets/c722694d-761b-455e-b39d-0122ac3156a0">
+<img width="1440" alt="Screenshot 2024-10-28 at 11 24 00 PM" src="https://github.com/user-attachments/assets/fd7f3145-2eb9-4025-9c91-8772c2575355">
+
+Now, run the below commands:
+
+```
+cd VSDBabySoc/src
+sta
+read_liberty -min ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -min ./lib/avsdpll.lib
+read_liberty -min ./lib/avsddac.lib
+read_liberty -max ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -max ./lib/avsdpll.lib
+read_liberty -max ./lib/avsddac.lib
+read_verilog ../output/synth/vsdbabysoc.synth.v
+link_design vsdbabysoc
+read_sdc ./sdc/vsdbabysoc_synthesis.sdc
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+```
+
+The below is the snapshot:
 
 
 
+Setup Time:
+<img width="706" alt="Screenshot 2024-10-28 at 11 29 14 PM" src="https://github.com/user-attachments/assets/315d0db1-9cba-4bf1-be6c-983a4e3d10d3">
+
+
+
+Hold Time:
+<img width="610" alt="Screenshot 2024-10-28 at 11 29 20 PM" src="https://github.com/user-attachments/assets/34780b25-0557-4fec-8bad-824e2c7ae1f4">
+
+
+
+
+
+</details>
 
