@@ -4178,13 +4178,13 @@ report_checks -path_delay min_max -format full_clock_expanded -digits 4
 
 
 
-Setup:
+Hold:
 
 <img width="706" alt="Screenshot 2024-10-28 at 11 29 14 PM" src="https://github.com/user-attachments/assets/315d0db1-9cba-4bf1-be6c-983a4e3d10d3">
 
 
 
-Hold:
+Setup:
 
 <img width="610" alt="Screenshot 2024-10-28 at 11 29 20 PM" src="https://github.com/user-attachments/assets/34780b25-0557-4fec-8bad-824e2c7ae1f4">
 
