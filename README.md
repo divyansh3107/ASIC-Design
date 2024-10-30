@@ -4191,3 +4191,109 @@ Hold:
 
 </details>
 
+
+<details>
+<summary><strong>Lab 12:</strong>Post Synthesis Static Timing Analysis using OpenSTA for all the sky130 lib files. </summary>
+
+Snapshot of the sdc file vsdbabysoc_synthesis.sdc:
+```
+set PERIOD 11
+set_units -time ns
+create_clock [get_pins {pll/CLK}] -name clk -period $PERIOD
+set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_transition [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_uncertainty -hold [expr $PERIOD * 0.08] [get_clocks clk]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_CP]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_VCO]
+set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
+```
+
+<img width="1440" alt="Screenshot 2024-10-30 at 9 48 12 PM" src="https://github.com/user-attachments/assets/b25be6fe-5057-42d4-b8c7-f87400a38ded">
+
+
+Store all the `lib` files in a folder named `timing_libs` and keep it in the `VSDBabySoC/src` directory.
+
+<img width="1440" alt="Screenshot 2024-10-30 at 10 03 48 PM" src="https://github.com/user-attachments/assets/b2032944-f860-4f28-8aa4-35e07fdea567">
+
+Now create a `sta_pvt.tcl` file and copy the below content in that file using gedit.
+
+```
+gedit sta_pvt.tcl
+```
+```
+set list_of_lib_files(1) "sky130_fd_sc_hd__ff_100C_1v65.lib"
+set list_of_lib_files(2) "sky130_fd_sc_hd__ff_100C_1v95.lib"
+set list_of_lib_files(3) "sky130_fd_sc_hd__ff_n40C_1v56.lib"
+set list_of_lib_files(4) "sky130_fd_sc_hd__ff_n40C_1v65.lib"
+set list_of_lib_files(5) "sky130_fd_sc_hd__ff_n40C_1v76.lib"
+set list_of_lib_files(6) "sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set list_of_lib_files(7) "sky130_fd_sc_hd__ff_n40C_1v95_ccsnoise.lib.part1"
+set list_of_lib_files(8) "sky130_fd_sc_hd__ff_n40C_1v95_ccsnoise.lib.part2"
+set list_of_lib_files(9) "sky130_fd_sc_hd__ff_n40C_1v95_ccsnoise.lib.part3"
+set list_of_lib_files(10) "sky130_fd_sc_hd__ss_100C_1v40.lib"
+set list_of_lib_files(11) "sky130_fd_sc_hd__ss_100C_1v60.lib"
+set list_of_lib_files(12) "sky130_fd_sc_hd__ss_n40C_1v28.lib"
+set list_of_lib_files(13) "sky130_fd_sc_hd__ss_n40C_1v35.lib"
+set list_of_lib_files(14) "sky130_fd_sc_hd__ss_n40C_1v40.lib"
+set list_of_lib_files(15) "sky130_fd_sc_hd__ss_n40C_1v44.lib"
+set list_of_lib_files(16) "sky130_fd_sc_hd__ss_n40C_1v60.lib"
+set list_of_lib_files(17) "sky130_fd_sc_hd__ss_n40C_1v60_ccsnoise.lib.part1"
+set list_of_lib_files(18) "sky130_fd_sc_hd__ss_n40C_1v60_ccsnoise.lib.part2"
+set list_of_lib_files(19) "sky130_fd_sc_hd__ss_n40C_1v60_ccsnoise.lib.part3"
+set list_of_lib_files(20) "sky130_fd_sc_hd__ss_n40C_1v76.lib"
+set list_of_lib_files(21) "sky130_fd_sc_hd__tt_025C_1v80.lib"
+set list_of_lib_files(22) "sky130_fd_sc_hd__tt_100C_1v80.lib"
+
+for {set i 1} {$i <= [array size list_of_lib_files]} {incr i} {
+read_liberty ./timing_libs/$list_of_lib_files($i)
+read_verilog ../output/synth/vsdbabysoc.synth.v
+link_design vsdbabysoc
+read_sdc ./sdc/vsdbabysoc_synthesis.sdc
+check_setup -verbose
+report_checks -path_delay min_max -fields {nets cap slew input_pins fanout} -digits {4} > ./sta_output/min_max_$list_of_lib_files($i).txt
+
+}
+```
+<img width="1440" alt="Screenshot 2024-10-30 at 9 46 51 PM" src="https://github.com/user-attachments/assets/39c26710-f929-40e8-bc5b-615fed7d803e">
+<img width="1440" alt="Screenshot 2024-10-30 at 9 47 13 PM" src="https://github.com/user-attachments/assets/492fc315-715f-438a-bae6-bd89d6ebab57">
+
+
+Now, run the following commands:
+
+```
+cd VSDBabySoC/src
+sta
+source sta_across_pvt.tcl
+```
+
+<img width="1440" alt="Screenshot 2024-10-30 at 9 56 05 PM" src="https://github.com/user-attachments/assets/f39cd591-9419-4bbe-ba9c-d77fe87bfbc8">
+
+Before that create a folder named `sta_output` in `VSDBabySoC/src` 
+
+<img width="1440" alt="Screenshot 2024-10-30 at 9 56 12 PM" src="https://github.com/user-attachments/assets/c36955f4-d8ff-46da-8815-b5062bd1c018">
+
+
+These `.txt` file will be generated as shown along with a sample file.
+
+<img width="1440" alt="Screenshot 2024-10-30 at 9 56 15 PM" src="https://github.com/user-attachments/assets/b122eced-c51f-46f7-b766-59597df7e242">
+<img width="1440" alt="Screenshot 2024-10-30 at 9 58 09 PM" src="https://github.com/user-attachments/assets/9fbd1f07-0943-46a0-ad79-bcc12d8e7eb6">
+
+
+Now put the values in excel and plot the graphs as shown:
+
+<img width="713" alt="Screenshot 2024-10-30 at 10 44 41 PM" src="https://github.com/user-attachments/assets/1fa2bcbf-178f-41cb-b9cf-4cb20d842ef9">
+
+<img width="817" alt="Screenshot 2024-10-30 at 10 52 16 PM" src="https://github.com/user-attachments/assets/5c88adbb-ecc1-44d0-abc5-e23e41243381">
+
+<img width="816" alt="Screenshot 2024-10-30 at 10 52 26 PM" src="https://github.com/user-attachments/assets/a2413f58-ddfa-405f-ad96-d3bd50b1477f">
+
+
+
+
+
+
+
+
+</details>
