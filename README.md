@@ -4265,7 +4265,7 @@ Now, run the following commands:
 ```
 cd VSDBabySoC/src
 sta
-source sta_across_pvt.tcl
+source sta_pvt.tcl
 ```
 
 <img width="1440" alt="Screenshot 2024-10-30 at 9 56 05 PM" src="https://github.com/user-attachments/assets/f39cd591-9419-4bbe-ba9c-d77fe87bfbc8">
