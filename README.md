@@ -1,4 +1,4 @@
-<img width="1440" alt="Screenshot 2024-11-13 at 4 41 28 PM" src="https://github.com/user-attachments/assets/f2f03907-f502-46aa-b88b-3f37efd27269"># ASIC-Design
+# ASIC-Design
 # Divyansh Singhal (IMT2021522)
 <details>
 <summary><strong>Lab 1:</strong> Create a C program to find the sum of `n` natural numbers, compile it using the GCC compiler, and verify the output after execution and after that also using RISC-V compiler.</summary>
@@ -4723,7 +4723,8 @@ Rise transition time: time(slew_high_rise_thr) - time(slew_low_rise_thr)
 
  
 <summary><strong>Day-3:</strong> Design library cell using Magic Layout and ngspice characterization</summary>
-**CMOS inverter ngspice simulations**
+
+**CMOS inverter ngspice simulations**:
 
 Creating a SPICE Deck for a CMOS Inverter Simulation
 
@@ -4735,10 +4736,13 @@ Creating a SPICE Deck for a CMOS Inverter Simulation
 <img width="658" alt="Screenshot 2024-11-13 at 4 55 17 PM" src="https://github.com/user-attachments/assets/ac3d7311-549c-4a35-aa4a-9d0d74047fe0">
 
 ```
-***syntax for PMOS and NMOS desription***
+
+**syntax for PMOS and NMOS desription**:
+
 [component name] [drain] [gate] [source] [substrate] [transistor type] W=[width] L=[length]
 
  ***simulation commands***
+
 .op --- is the start of SPICE simulation operation where Vin sweeps from 0 to 2.5 with 0.5 steps
 tsmc_025um_model.mod  ----  model file which contains the technological parameters for the 0.25um NMOS and PMOS 
 ```
@@ -4762,7 +4766,8 @@ To find the switching threshold
 
 ```
 Vin in 0 2.5
-*** Simulation Command ***
+***Simulation Command***
+
 .op
 .dc Vin 0 2.5 0.05
 ```
@@ -4800,10 +4805,210 @@ magic -T sky130A.tech sky130_inv.mag &
 ```
 
 
+<img width="1440" alt="Screenshot 2024-11-13 at 10 29 42 PM" src="https://github.com/user-attachments/assets/ceb8e98b-60e2-4ba0-be92-11cb9215cc44">
+
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 29 30 PM" src="https://github.com/user-attachments/assets/4f456cdb-c70a-44b9-a110-7d1bde7392aa">
+
+**Inception of Layout CMOS fabrication process**
+
+The 16-mask CMOS design fabrication process:
+
+1. Substrate Preparation: The process begins with preparing a silicon wafer as the foundational substrate for the circuit.
+2. N-Well Formation: The N-well regions are created on the substrate by introducing impurities, typically phosphorus, through ion implantation or diffusion
+3. P-Well Formation: Similar to the N-well formation, P-well regions are created using ion implantation or diffusion with boron or other suitable dopants.
+4. Gate Oxide Deposition: A thin silicon dioxide layer is deposited to form the gate oxide, which insulates the gate from the channel.
+5. Poly-Silicon Deposition: A layer of polysilicon is deposited on the gate oxide to serve as the gate electrode.
+6. Poly-Silicon Masking and Etching: A photoresist mask defines areas where polysilicon should remain, and etching removes exposed portions.
+7. N-Well Masking and Implantation: A photoresist mask is used to define the areas where the N-well regions should be preserved. Phosphorus or other suitable impurities are then implanted into the exposed regions.
+8. P-Well Masking and Implantation: Similarly, a photoresist mask is used to define the areas where the P-well regions should be preserved. Boron or other suitable impurities are implanted into the exposed regions.
+9. Source/Drain Implantation: Using photoresist masks, dopants are implanted to create source and drain regions (e.g., arsenic for NMOS, boron for PMOS).
+10. Gate Formation: The gate electrode is defined by etching the poly-silicon layer using a photoresist mask.
+11. Source/Drain Masking and Etching: A photoresist mask is applied to define the source and drain regions followed by etching to remove the oxide layer in those areas.
+12. Contact/Via Formation: Contact holes or vias are etched through the oxide layer to expose the underlying regions, such as the source/drain regions or poly-silicon gates.
+13. Metal Deposition: A layer of metal, typically aluminum or copper, is deposited on the wafer surface to form the interconnects.
+14. Metal Masking and Etching: A photoresist mask is used to define the metal interconnects, and etching is performed to remove the exposed metal, leaving behind the desired interconnect patterns.
+15. Passivation Layer Deposition: A protective layer, often made of silicon dioxide or nitride, is deposited to isolate and shield the metal interconnects.
+16. Final Testing and Packaging: The fabricated wafer undergoes rigorous testing to ensure the functionality of the integrated circuits. The working chips are then separated, packaged, and prepared for use in various electronic devices.
+
+<img width="661" alt="Screenshot 2024-11-13 at 10 30 18 PM" src="https://github.com/user-attachments/assets/8bc3ee83-9476-4bb0-b797-a3520dc2b36e">
+
+
+Inverter layout:
+
+Identify NMOS:
+<img width="1440" alt="Screenshot 2024-11-13 at 10 38 01 PM" src="https://github.com/user-attachments/assets/54301c39-d839-4f9e-a1cc-cf1111a4eaf2">
+
+
+
+Identify PMOS:
+<img width="1440" alt="Screenshot 2024-11-13 at 10 40 20 PM" src="https://github.com/user-attachments/assets/d8f0fb7c-2d22-428e-a3e9-e29d49a8aefa">
+
+
+
+Output Y:
+<img width="1440" alt="Screenshot 2024-11-13 at 10 41 09 PM" src="https://github.com/user-attachments/assets/ac2751ae-056d-48b6-a708-354b941e8555">
+
+
+
+PMOS source connected to VDD:
+<img width="1440" alt="Screenshot 2024-11-13 at 10 41 42 PM" src="https://github.com/user-attachments/assets/2670b34a-6304-433b-9c34-0a2e94f6448a">
+
+
+
+NMOS source connected to VSS:
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 42 13 PM" src="https://github.com/user-attachments/assets/7f5a7d71-85ac-4350-9a3d-6e502f538c58">
+
+
+Spice extraction of inverter in Magic. Run these in the tkcon window:
+
+```
+# Check current directory
+pwd
+extract all
+ext2spice cthresh 0 rthresh 0
+ext2spice
+```
+<img width="1440" alt="Screenshot 2024-11-13 at 10 43 16 PM" src="https://github.com/user-attachments/assets/79b5c9ad-e7f9-46e4-abbd-56c61238d473">
+
+To view the spice file:
+<img width="1440" alt="Screenshot 2024-11-13 at 10 44 31 PM" src="https://github.com/user-attachments/assets/4045d198-3eb9-4e70-8ed2-5e9b2a8af1a6">
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 44 56 PM" src="https://github.com/user-attachments/assets/f3a4339a-8606-4a5f-b747-c541734888fc">
 
 
 
 
+The contents of spice file:
+
+```
+* SPICE3 file created from sky130_inv.ext - technology: sky130A
+
+.option scale=10n
+
+.subckt sky130_inv A Y VPWR VGND
+X0 Y A VGND VGND sky130_fd_pr__nfet_01v8 ad=1.37n pd=0.148m as=1.37n ps=0.148m w=35 l=23
+X1 Y A VPWR VPWR sky130_fd_pr__pfet_01v8 ad=1.44n pd=0.152m as=1.52n ps=0.156m w=37 l=23
+C0 VPWR Y 0.11fF
+C1 A Y 0.754fF
+C2 A VPWR 0.277fF
+C3 Y VGND 0.279fF
+C4 A VGND 0.45fF
+C5 VPWR VGND 0.781fF
+.ends
+
+```
+
+Now modify the `sky130_inv.spice` file to find the transient respone:
+
+
+
+```
+* SPICE3 file created from sky130_inv.ext - technology: sky130A
+
+.option scale=0.01u
+.include ./libs/pshort.lib
+.include ./libs/nshort.lib
+
+//.subckt sky130_inv A Y VPWR VGND
+M1000 Y A VGND VGND nshort_model.0 w=35 l=23
++  ad=1.44n pd=0.152m as=1.37n ps=0.148m
+M1001 Y A VPWR VPWR pshort_model.0 w=37 l=23
++  ad=1.44n pd=0.152m as=1.52n ps=0.156m
+
+VDD VPWR 0 3.3V
+VSS VGND 0 0V
+Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)
+
+C0 A VPWR 0.0774f
+C1 VPWR Y 0.117f
+C2 A Y 0.0754f
+C3 Y VGND 2f
+C4 A VGND 0.45f
+C5 VPWR VGND 0.781f
+//.ends
+
+.tran 1n 20n
+.control
+run
+.endc
+.end
+```
+
+Now, simulate the spice netlist
+```
+ngspice sky130_inv.spice
+```
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 48 54 PM" src="https://github.com/user-attachments/assets/2f0e0938-5361-43b5-b149-81e17d6845b7">
+
+
+To plot the waveform:
+
+```
+plot y vs time a
+```
+<img width="1440" alt="Screenshot 2024-11-13 at 10 49 23 PM" src="https://github.com/user-attachments/assets/a066eea7-ae9b-425b-b43e-00984a9b29ae">
+
+
+
+Using this transient response, we will now characterize the cell's slew rate and propagation delay:
+
+Rise Transition: Time taken for the output to rise from 20% to 80% of max value
+Fall Transition: Time taken for the output to fall from 80% to 20% of max value
+Cell Rise delay: difference in time(50% output rise) to time(50% input fall)
+Cell Fall delay: difference in time(50% output fall) to time(50% input rise)
+
+```
+Rise Transition : 2.24638 - 2.18242 =  0.06396 ns = 63.96 ps
+Fall Transition : 4.0955 - 4.05536 =  0.0419 ns = 41.9 ps
+Cell Rise Delay : 2.21144 - 2.15008 = 0.06136 ns = 61.36 ps
+Cell Fall Delay : 4.07807 - 4.05 =0.02 ns = 20 ps
+```
+
+
+Magic Tool options and DRC Rules:
+
+Now, go to home directory and run the below commands:
+
+```
+cd
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+tar xfz drc_tests.tgz
+cd drc_tests
+ls -al
+gvim .magicrc
+magic -d XR &
+```
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 51 20 PM" src="https://github.com/user-attachments/assets/abcfa703-c252-4f8d-bd44-db43ece5bccf">
+
+First load the poly file by load poly.mag on tkcon window.
+
+<img width="1440" alt="Screenshot 2024-11-13 at 10 54 44 PM" src="https://github.com/user-attachments/assets/02f4597f-1657-48c4-a760-465b729c0e10">
+
+
+
+We can see that Poly.9 is incorrect.
+
+Add the below commands in the sky130A.tech
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 02 29 PM" src="https://github.com/user-attachments/assets/eb30ace6-c9bf-43cd-bfa8-bad2acafe405">
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 04 01 PM" src="https://github.com/user-attachments/assets/28ce728a-9267-4a43-a231-1938282bf327">
+
+
+
+
+Run the commands in tkcon window:
+
+```
+tech load sky130A.tech
+drc check
+drc why
+```
+<img width="1440" alt="Screenshot 2024-11-13 at 11 06 29 PM" src="https://github.com/user-attachments/assets/d926bdb9-b000-47b5-8070-be54242ea076">
 
 
 </details>
@@ -4813,20 +5018,111 @@ magic -T sky130A.tech sky130_inv.mag &
 
 <details>
 
+<summary><strong>Day-4:</strong> Pre-layout timing analysis and importance of good clock tree. </summary>
+
+Commands to extract `tracks.info` file:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+cd ../../pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/
+less tracks.info
+```
+
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 10 46 PM" src="https://github.com/user-attachments/assets/b16726bb-edcf-42b7-99d3-8f177d341a75">
+
+
+Commands for tkcon window to set grid as tracks of locali layer
+
+```
+grid 0.46um 0.34um 0.23um 0.17um
+```
+<img width="1440" alt="Screenshot 2024-11-13 at 11 13 53 PM" src="https://github.com/user-attachments/assets/5d998264-a0be-4cfb-bf45-c1400548e85f">
+
+
+
+The grids show where the routing for the local-interconnet layer can only happen, the distance of the grid lines are the required pitch of the wire. Below, we can see that the guidelines are satisfied:
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 14 11 PM" src="https://github.com/user-attachments/assets/f2af1763-21ad-4271-b090-3f127f1f5a84">
+
+
+Now, save it by giving a custon mae
+
+```
+save sky130_divinv.mag
+```
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 16 14 PM" src="https://github.com/user-attachments/assets/77dfeaec-a6c7-48e9-9e1a-d6fd6a05a637">
+
+Now, open it by using the following commands:
+
+```
+magic -T sky130A.tech sky130_divinv.mag &
+```
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 18 12 PM" src="https://github.com/user-attachments/assets/014dc827-62a2-4bf0-b136-469e76b16ede">
+
+
+Now, type the following command in tkcon window:
+
+```
+lef write
+```
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 19 05 PM" src="https://github.com/user-attachments/assets/21645f42-41bc-4828-8b4d-babadbfd7a07">
+
+<img width="1440" alt="Screenshot 2024-11-13 at 11 19 24 PM" src="https://github.com/user-attachments/assets/047e0725-b232-4781-a280-5d7646a86fa1">
+
+
+Modify config.tcl:
+
+```
+# Design
+set ::env(DESIGN_NAME) "picorv32a"
+
+set ::env(VERILOG_FILES) "./designs/picorv32a/src/picorv32a.v"
+set ::env(SDC_FILES) "./designs/picorv32a/src/picorv32a.sdc"
+
+
+set ::env(CLOCK_PERIOD) "5.000"
+set ::env(CLOCK_PORT) "clk"
+
+set ::env(CLOCK_NET) $::env(CLOCK_PORT) 
+
+
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib "
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib "
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]   ## this is the new line added to the existing config.tcl file
+
+set filename $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl
+if { [file exists $filename] == 1 } {
+  source $filename
+}
+```
+
+
+
+
+
+
+</details>
+
+
+
+
+
+<details>
+
 
  
-<summary><strong>Day-4:</strong> Open-source EDA, OpenLane and Sky130 PDK</summary>
-
-</details>
-
-
-
-</details>
-
-
 <summary><strong>Day-5:</strong> Open-source EDA, OpenLane and Sky130 PDK</summary>
 
 </details>
+
+
 
 
 
