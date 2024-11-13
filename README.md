@@ -1,4 +1,4 @@
-<img width="810" alt="Screenshot 2024-11-14 at 4 29 54 AM" src="https://github.com/user-attachments/assets/79d00fb2-627e-47d9-b9c4-985390bc2ee3"># ASIC-Design
+# ASIC-Design
 # Divyansh Singhal (IMT2021522)
 <details>
 <summary><strong>Lab 1:</strong> Create a C program to find the sum of `n` natural numbers, compile it using the GCC compiler, and verify the output after execution and after that also using RISC-V compiler.</summary>
