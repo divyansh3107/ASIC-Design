@@ -810,7 +810,7 @@ Code
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
    
 \SV
-   m4_makerchip_module   // (Expanded in Nav-TLV pane.)
+   m4_makerchip_module   // (ed in Nav-TLV pane.)
 \TLV
 
    // /====================\
@@ -900,7 +900,7 @@ Code
   m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
 \SV
-   m4_makerchip_module   // (Expanded in Nav-TLV pane.)
+   m4_makerchip_module   // (ed in Nav-TLV pane.)
 \TLV
 
    // /====================\
@@ -1061,7 +1061,7 @@ Code
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
 \SV
-   m4_makerchip_module   // (Expanded in Nav-TLV pane.)
+   m4_makerchip_module   // (ed in Nav-TLV pane.)
 \TLV
 
    // /====================\
@@ -5217,8 +5217,6 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 
 
-Now, select the cell and type expand in tkcon window to view internal layers of cells
-<img width="665" alt="Screenshot 2024-11-14 at 3 42 43 AM" src="https://github.com/user-attachments/assets/835309a7-8864-4c67-ae27-371c621e58a8">
 
 
 
