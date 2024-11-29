@@ -7058,7 +7058,12 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 <img width="1440" alt="Screenshot 2024-11-29 at 4 49 27 PM" src="https://github.com/user-attachments/assets/f7368283-258c-4b4e-ab51-744bf4e04406">
 
 
+Report:
 
+
+
+<img width="1440" alt="Screenshot 2024-11-29 at 4 57 23 PM" src="https://github.com/user-attachments/assets/14bcf733-84d8-4cb9-8523-9466a19f069e">
+<img width="1440" alt="Screenshot 2024-11-29 at 4 57 42 PM" src="https://github.com/user-attachments/assets/6080735e-9ae4-4ad9-9004-44c3021c2f44">
 
 
 
